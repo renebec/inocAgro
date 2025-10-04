@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>inAgro</title>
+    <title>statSat</title>
     <link             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,7 +80,7 @@
     </head>
         <nav class="navbar fixed-top bg-white shadow-sm mb-4">
             <div class="container-fluid d-flex justify-content-between row">
-                <span class="navbar-brand mb-0 h1 navtxt col-9">Inocuidad alimentaria</span><a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm col-3" id="btnCerrar">Cerrar Sesión</a>
+                <span class="navbar-brand mb-0 h1 navtxt col-9">statSat</span><a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm col-3" id="btnCerrar">Cerrar Sesión</a>
             </div>
         </nav>
     
@@ -111,7 +111,7 @@
 <body>
     <header>
         <h1 class="text-center mt-4 mb-2" style="color:rgb(100,100,100);">
-            Inocuidad en la Agricultura
+            StatSat
         </h1>
     </header>
 
@@ -124,12 +124,7 @@
 <!--        <a href="https://dgetaycm.sep.gob.mx/Con%C3%B3cenos/2" target="_blank">Acerca de DGETAyCM</a>&#128072;<br>
         <a href="https://renebec.github.io/mapdgetaycm/" target="_blank">Mapa de planteles</a>&#128072;
  -->       
-        <h2 class="text-center mt-4 mb-2" style="color:rgb(100,100,100);">
-            Acerca del curso
-        </h2>
-        <p class="lead">
-            Aprenderemos diferentes principios, técnicas y procedimientos para alcanzar y garantizar los estándares fitosanitarios en el manejo de productos agrícolas de acuerdo a normas nacionales e internacionales. El contenido del curso se desarrolla a través de 10 progresiones de aprendizaje. Tendrás acceso a algunos materiales como lecturas, vídeos y ejercicios para realizar las diferentes actividades de evaluación. Espero que este modesto material sea de utilidad y beneficio para mis estudiantes.<br><i style="color:rgb(150,150,150);font-size:16px">M.C. Héctor René Becerril Cejudo</i><br><i style="color:rgb(150,150,150);font-size:16px">Aguascalientes, México.</i>
-        </p>
+        
         {% if es_profesor %}
         <a  href="{{ url_for('plan_carga') }}">
               <button type="submit" class="btn btn-warning">Subir una planeación</button>
