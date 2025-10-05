@@ -29,10 +29,29 @@ def handle_choice():
     return render_template('register.html', choice=choice)
 
 
+def is_preregistered(numero_control):
+    """
+    Return True if numero_control is present in alumnos_preregistrados table.
+    """
+    try:
+        session = get_db_session()
+        result = session.execute(
+            text("SELECT 1 FROM prereg WHERE controlnum = :nc"),
+            {"nc": controlnum}
+        )
+        row = result.first()
+        session.close()
+        return row is not None
+    except Exception as e:
+        print(f"DB ERROR in is_preregistered: {e}")
+        # maybe safe to reject if DB error
+        return False
+
+
 def load_pg_from_db():
     try:
       with engine.connect() as conn:
-          result = conn.execute(text("SELECT * FROM inocAgro"))
+          result = conn.execute(text("SELECT * FROM matSat"))
           pg = result.mappings().all()
           return pg
     except Exception as e:
@@ -43,9 +62,9 @@ def load_pg_from_db2():
     try:
       with engine.connect() as conn:
           #result = conn.execute(text("SELECT * FROM planInocAgro ORDER BY created_at DESC"))
-          result = conn.execute(text("SELECT * FROM planInocAgro"))
-          pg = result.mappings().all()
-          return pg
+          result = conn.execute(text("SELECT * FROM matSat"))
+          pg2 = result.mappings().all()
+          return pg2
     except Exception as e:
       print(f"DB ERROR: {e}")
       return None
@@ -62,7 +81,7 @@ def load_pg_from_db2():
 def load_plan_from_db(id):
     try:
       with engine.connect() as conn:
-          result = conn.execute(text("SELECT * FROM planInocAgro WHERE id = :val"),
+          result = conn.execute(text("SELECT * FROM matSat WHERE id = :val"),
               {"val":id}
             )
           row = result.mappings().first()
@@ -72,17 +91,14 @@ def load_plan_from_db(id):
       return None
 
 
-
-
-
 def load_pgn_from_db(id):
   try:
     with engine.connect() as conn:
       result = conn.execute(
-        text("SELECT * FROM planInocAgro WHERE id = :val"),
-        {"val":plan}
+        text("SELECT * FROM matSat WHERE id = :val"),
+        {"val": id}
       )
-      row = result.mappings().first()  # <- dict, no tupla
+      row = result.mappings().first()
       return dict(row) if row else None
   except Exception as e:
     print(f"DB ERROR: {e}")
@@ -95,7 +111,7 @@ def insert_actividad(session, actividad_num, apellido_paterno, apellido_materno,
     created_at = datetime.now(pytz.timezone("America/Mexico_City"))
     try:
             query = text("""
-                INSERT INTO actividades_inoc (
+                INSERT INTO actividades (
                     actividad_num,
                     apellido_paterno,
                     apellido_materno,
@@ -151,11 +167,12 @@ def insert_plan(
     ciDur, ciEv, ciIns, ciPond, ciAct,
     materiales, equipo, fuentes,
     elabora, revisa, avala, cve,
-    created_at=None, pdf_url=None
+    created_at=None, pdf_url=None, parPond=None
 ):
     # Si no se proporciona created_at, se asigna la hora actual de México
     if created_at is None:
         created_at = datetime.now(pytz.timezone("America/Mexico_City"))
+
 
     # Preparación de parámetros para INSERT y UPDATE
     params = {
@@ -177,13 +194,13 @@ def insert_plan(
         "ciAct": ciAct,
         "materiales": materiales, "equipo": equipo, "fuentes": fuentes,
         "elabora": elabora, "revisa": revisa, "avala": avala, "cve": cve,
-        "created_at": created_at, "pdf_url": pdf_url
+        "created_at": created_at, "pdf_url": pdf_url, "parPond": parPond
     }
 
     try:
         # Definición de la sentencia INSERT
         insert_query = text("""
-            INSERT INTO planInocAgro (
+            INSERT INTO matSat (
                 plan, asig, prop, temas, plantel, ciclo, meta, periodo, carrera,
                 semestre, grupos, horas_sem, docenteID, imparte, parcial,
                 trAsigP1, trtemaP1, trAsigP2, trtemaP2, trAsigP3, trtemaP3,
@@ -192,16 +209,16 @@ def insert_plan(
                 apDur, apEv, apIns, apPond, apAct, deDur, deEv, deIns, dePond,
                 deAct, ciDur, ciEv, ciIns, ciPond, ciAct,
                 materiales, equipo, fuentes,
-                elabora, revisa, avala, cve, created_at, pdf_url
+                elabora, revisa, avala, cve, created_at, pdf_url, parPond
             ) VALUES (
-                :asig, :prop, :temas, :plantel, :ciclo, :meta, :periodo, :carrera,
+                :plan, :asig, :prop, :temas, :plantel, :ciclo, :meta, :periodo, :carrera,
                 :semestre, :grupos, :horas_sem, :docenteID, :imparte, :parcial,
                 :trAsigP1, :trtemaP1, :trAsigP2, :trtemaP2, :trAsigP3, :trtemaP3,
                 :trAsigP4, :trtemaP4, :trAsigM1, :trtemaM1, :trAsigM2, :trtemaM2,
                 :trAsigM3, :trtemaM3, :trAsigM4, :trtemaM4, :apDur, :apEv, :apIns,
                 :apPond, :apAct, :deDur, :deEv, :deIns, :dePond, :deAct,
                 :ciDur, :ciEv, :ciIns, :ciPond, :ciAct, :materiales, :equipo,
-                :fuentes, :elabora, :revisa, :avala, :cve, :created_at, :pdf_url
+                :fuentes, :elabora, :revisa, :avala, :cve, :created_at, :pdf_url, :parPond
             )
         """)
         result = session.execute(insert_query, params)
@@ -214,7 +231,7 @@ def insert_plan(
             print("⚠️ Plan duplicado detectado. Actualizando...")
 
             update_query = text("""
-                UPDATE planInocAgro SET
+                UPDATE matSat1 SET
                     plan = :plan, asig = :asig, meta = :meta, prop = :prop, temas = :temas,
                     plantel = :plantel, ciclo = :ciclo, periodo = :periodo, carrera = :carrera,
                     semestre = :semestre, grupos = :grupos, horas_sem = :horas_sem,
@@ -234,14 +251,14 @@ def insert_plan(
                     ciAct = :ciAct,
                     materiales = :materiales, equipo = :equipo, fuentes = :fuentes,
                     elabora = :elabora, revisa = :revisa, avala = :avala,
-                    created_at = :created_at, pdf_url = :pdf_url
-                WHERE cve = :cve
+                    created_at = :created_at, pdf_url = :pdf_url, parPond = : parPond
+                WHERE plan = :plan
             """)
 
             session.execute(update_query, params)
             session.commit()
             print("✅ Plan actualizado correctamente")
-            return params.get("cve")  # Puedes retornar el identificador si corresponde
+            return params.get("plan")  # Puedes retornar el identificador si corresponde
 
         # Si no es por duplicado, propaga el error
         raise
@@ -277,7 +294,7 @@ def get_user_from_database(username):
 
 
 # Register a new user in the database
-def register_user(session, numero_control, apellido_paterno, apellido_materno, nombres, username, password, carrera, semestre, grupo):
+def register_user(session, numero_control, apellido_paterno, apellido_materno, nombres, username, password, carrera, semestre, grupo, created_at):
     # Check if username already exists
     existing_user = get_user_from_database(username)
     if existing_user:
@@ -287,8 +304,8 @@ def register_user(session, numero_control, apellido_paterno, apellido_materno, n
     password = password  # You might want to hash this password
     try:
         sql = text("""
-            INSERT INTO users ( numero_control, apellido_paterno, apellido_materno, nombres, username, password, carrera, semestre, grupo)
-            VALUES (:numero_control, :apellido_paterno, :apellido_materno, :nombres, :username, :password, :carrera, :semestre, :grupo)
+            INSERT INTO users ( numero_control, apellido_paterno, apellido_materno, nombres, username, password, carrera, semestre, grupo, created_at)
+            VALUES (:numero_control, :apellido_paterno, :apellido_materno, :nombres, :username, :password, :carrera, :semestre, :grupo, :created_at)
         """)
         session.execute(sql, {
             "numero_control": numero_control,
@@ -300,6 +317,7 @@ def register_user(session, numero_control, apellido_paterno, apellido_materno, n
             "carrera": carrera,
             "semestre": semestre,
             "grupo": grupo,
+            "created_at": created_at
         })
         session.commit()  # Commit the transaction
     except Exception as e:
