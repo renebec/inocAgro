@@ -8,4 +8,4 @@ pytz
 cloudinary
 mysql-connector-python
 weasyprint
-fla
+flask-bcrypt
