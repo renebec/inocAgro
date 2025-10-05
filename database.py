@@ -77,6 +77,25 @@ def load_pg_from_db2():
       #print(result_all)
     #otro comentario
 
+def load_pg_from_db3():
+    try:
+      with engine.connect() as conn:
+          #result = conn.execute(text("SELECT * FROM planInocAgro ORDER BY created_at DESC"))
+          result = conn.execute(text("SELECT * FROM webContent"))
+          pg3 = result.mappings().all()
+          return pg3
+    except Exception as e:
+      print(f"DB ERROR: {e}")
+      return None
+
+      #result_all = result.all()
+      #tipo = type(result_all)
+      #tipo_2 = type(result_all[0])
+      #print(tipo)
+      #print(tipo_2)
+      #print(result_all)
+    #otro comentario
+
 
 def load_plan_from_db(id):
     try:

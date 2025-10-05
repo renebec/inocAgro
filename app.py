@@ -78,6 +78,11 @@ def show_pg(pg_id):
     item = next((item for item in pg if item['plan'] == pg_id), None)
     if item is None:
         return "Not Found", 404
+
+    pg3 = load_pg_from_db3()
+    item = next((item for item in pg3 if item['id'] == pg_id), None)
+    if item is None:
+        return "Not Found", 404
     return render_template('classpage.html', i=item)
 
 
