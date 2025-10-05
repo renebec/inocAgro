@@ -23,7 +23,7 @@ def get_db_connection():
         print(f"❌ Database connection error: {e}")
         return None
 
-def validate_preregistration(numero_control):
+def validate_preregistration(controlnum):
     """
     Validate if user (student OR teacher) is pre-registered and not already used
     Only checks numero_control - works for both students and teachers
@@ -84,7 +84,7 @@ def mark_preregistration_as_used(controlnum):
                 SET usado = 1, fecha_uso = %s 
                 WHERE controlnum = %s AND usado = 0
             """
-            rows_affected = cursor.execute(query, (datetime.now(), numero_control))
+            rows_affected = cursor.execute(query, (datetime.now(), controlnum))
             connection.commit()
 
         connection.close()

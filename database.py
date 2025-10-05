@@ -250,7 +250,7 @@ def insert_plan(
             print("⚠️ Plan duplicado detectado. Actualizando...")
 
             update_query = text("""
-                UPDATE matSat1 SET
+                UPDATE matSat SET
                     plan = :plan, asig = :asig, meta = :meta, prop = :prop, temas = :temas,
                     plantel = :plantel, ciclo = :ciclo, periodo = :periodo, carrera = :carrera,
                     semestre = :semestre, grupos = :grupos, horas_sem = :horas_sem,
