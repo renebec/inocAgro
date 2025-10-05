@@ -29,7 +29,7 @@ def handle_choice():
     return render_template('register.html', choice=choice)
 
 
-def is_preregistered(numero_control):
+def is_preregistered(controlnum):
     """
     Return True if numero_control is present in alumnos_preregistrados table.
     """
