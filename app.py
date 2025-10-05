@@ -75,15 +75,15 @@ def show_pg(pg_id):
 
     # Supongamos que TEMAS es tu estructura de datos (lista o dict)
     pg = load_pg_from_db()
-    item = next((item for item in pg if item['plan'] == pg_id), None)
-    if item is None:
+    item_pg = next((item for item in pg if item['plan'] == pg_id), None)
+    if item_pg is None:
         return "Not Found", 404
 
     pg3 = load_pg_from_db3()
-    item = next((item for item in pg3 if item['id'] == pg_id), None)
-    if item is None:
+    item_pg3 = next((item for item in pg3 if item['id'] == pg_id), None)
+    if item_pg3 is None:
         return "Not Found", 404
-    return render_template('classpage.html', i=item)
+    return render_template('classpage.html', i=item_pg, j=item_pg3)
 
 
 

@@ -312,9 +312,9 @@
         <div id='Aper'><br><br></div>
         <div class="apertura" >
     <h2 style="color:green;">Apertura ({{i['apDur']/60}} hrs)</h2>
-    {{i['apAct'] | safe}}
+    {{j['apHTML'] | safe}}
             <br><br>
-          <!-- ANUNCIO EN CONSTRUCCIÓN -->
+          <!-- ANUNCIO EN CONSTRUCCIÓN
           <text style="font-size:130px">
             &#128679;
           </text>
@@ -336,9 +336,9 @@
         <div class="desarrollo">
     <h2 style="color:orange;"">Desarrollo ({{i['deDur']/60}} hrs)</h2>
             
-    {{i['deAct'] | safe}}
+    {{j['deHTML'] | safe}}
           <br><br>
-          <!-- ANUNCIO EN CONSTRUCCIÓN -->
+          <!-- ANUNCIO EN CONSTRUCCIÓN
           <text style="font-size:130px">
             &#128679;
           </text>
@@ -349,13 +349,14 @@
             
 
                   <br>
-                  <!-- ANUNCIO EN CONSTRUCCIÓN -->
+                  <!-- ANUNCIO EN CONSTRUCCIÓN
                   <text style="font-size:130px">
                     &#128679;
                   </text>
                   <br>
                   <text style="color:rgb(259,100,100);font-weight:bold;font-size:30px">En construcción...</text>
                   <br>
+           -->
                 </div>
         </div>
   
@@ -366,17 +367,17 @@
         <div class="cierre">
             <h2 style="color:#B51767;"">Cierre ({{i['ciDur']/60}} hrs)</h2>
 
-            {{i['ciAct'] | safe}}</br>
+            {{j['ciHTML'] | safe}}</br>
           
           <br>
-          <!-- ANUNCIO EN CONSTRUCCIÓN -->
+          <!-- ANUNCIO EN CONSTRUCCIÓN 
           <text style="font-size:130px">
             &#128679;
           </text>
           <br>
           <text style="color:rgb(259,100,100);font-weight:bold;font-size:30px">En construcción...</text>
           <br>
-
+          -->
 
 
 
