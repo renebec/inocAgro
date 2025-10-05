@@ -112,7 +112,7 @@ def get_preregistration_stats():
                     COUNT(*) as total_preregistered,
                     SUM(CASE WHEN usado = 1 THEN 1 ELSE 0 END) as used_registrations,
                     SUM(CASE WHEN usado = 0 THEN 1 ELSE 0 END) as available_registrations
-                FROM alumnos_preregistrados
+                FROM prereg
             """
             cursor.execute(stats_query)
             stats = cursor.fetchone()
