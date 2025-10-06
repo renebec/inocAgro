@@ -320,7 +320,16 @@ def register_user(session, numero_control, apellido_paterno, apellido_materno, n
         # If the user already exists, return False or an error message
         return False
 
+    # Convert empty strings to None
+    def clean(value):
+        return value if value not in ('', None) else None
+
+
+    semestre = clean(semestre)
+    
+
     password = password  # You might want to hash this password
+    
     try:
         sql = text("""
             INSERT INTO users ( numero_control, apellido_paterno, apellido_materno, nombres, username, password, carrera, semestre, grupo, created_at)
