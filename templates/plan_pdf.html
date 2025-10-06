@@ -123,7 +123,7 @@
 <br><br>
 <h3> {{ i.parcial }} </h3><br>
 <h4>Planeación #{{ i.plan }}</h4>
-Planeación registrada el {{ i.reated_at }}
+Planeación registrada el {{ i.created_at }}
 <table class="grid-form">
   <thead>
 
@@ -145,15 +145,15 @@ Planeación registrada el {{ i.reated_at }}
     </tr>
     <tr>
         <td colspan="1" class="label-cell">Meta<br>educativa</td>
-        <td colspan="2" class="value-cell">
+        <td colspan="1" class="value-cell">
             <pre style="margin: 0;">{{ i.meta }}</pre>
         </td>
         <td colspan="1" class="label-cell">Propósito<br>formativo</td>
-        <td colspan="2" class="value-cell">
+        <td colspan="1" class="value-cell">
             <pre style="margin: 0;">{{ i.prop }}</pre>
         </td>
         <td colspan="1" class="label-cell">Contenidos</td>
-        <td colspan="2" class="value-cell">
+        <td colspan="1" class="value-cell">
             <pre style="margin: 0;">{{ i.temas }}</pre>
         </td>
     </tr>
@@ -272,6 +272,12 @@ Planeación registrada el {{ i.reated_at }}
             <pre style="margin: 0;">{{ i.ciAct }}</pre>
         </td>
     </tr>
+      <tr>
+          <td colspan="1" class="label-cell">Poonderación en el parcial (%):</td>
+          <td colspan="5" class="value-cell">
+              <pre style="margin: 0;">{{ i.parPond }}</pre>
+          </td>
+      </tr>
 
     </table>
     </div>

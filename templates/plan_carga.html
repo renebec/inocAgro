@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 <meta charset="utf-8" />
-<title>plan</title>
-<meta name="frm_plan" content="form planea" />
-<meta name="PM1" content="width=device-width, initial-scale=1.0" />
+<title>loadPlan</title>
+<!--<meta name="frm_plan" content="form planea" />-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+  <style>
+      .btn-sm {
+          width:100px;
+      }
+
+  </style>
 
 
 <!--
@@ -73,9 +79,9 @@
 
 
 <body>
-  
+
   <div class="container">
-    
+
 
 
     <form method="POST" enctype="multipart/form-data" action="/plan_carga">
@@ -85,7 +91,7 @@
       <div class="mb-3 row g-3">
         <div class="col-sm-4">
         <label for="plantel" class="form-label" style="font-weight:bold;">Plantel</label>
-          <select type="text" class="form-select" name="plantel">
+          <select type="text" class="form-select" name="plantel" required>
             <option selected>Seleccione...</option>
             <option value="CETAC 05">CETAC 05</option>
             <option value="CBTA 30">CBTA 30</option>
@@ -98,7 +104,7 @@
         </div>
         <div class="col-sm-4">
         <label for="ciclo" class="form-label" style="font-weight:bold;">Ciclo</label>
-          <select type="text" class="form-select" name="ciclo">
+          <select type="text" class="form-select" name="ciclo" required>
             <option selected>Seleccione...</option>
             <option value="2025-2026">2025-2026</option>
             <option value="2026-2027">2026-2027</option>
@@ -109,7 +115,7 @@
         </div>
         <div class="col-sm-4">
         <label class="form-label" for="periodo" style="font-weight:bold;">Periodo</label>
-        <select type="text" class="form-select" name="periodo">
+        <select type="text" class="form-select" name="periodo" required>
           <option selected>Seleccione...</option>
           <option value="AGOSTO-ENERO">AGOSTO-ENERO</option>
           <option value="FEBRERO-JULIO">FEBRERO-JULIO</option>
@@ -120,7 +126,7 @@
       <div class="mb-3 row g-2">
       <div class="col-sm-4">
         <label class="form-label" for="parcial" style="font-weight:bold;">Parcial</label>
-        <select type="text" class="form-select" name="parcial">
+        <select type="text" class="form-select" name="parcial" required>
           <option selected>Seleccione...</option>
           <option value="PARCIAL 1">PARCIAL 1</option>
           <option value="PARCIAL 2">PARCIAL 2</option>
@@ -128,19 +134,19 @@
           <option value="Recursamiento intersemestral">Recursamiento intersemestral</option>
         </select>
       </div>
-        
+
       <div class="col-sm-4">
         <label class="form-label" for="plan" style="font-weight:bold;">Planeación #No:</label>
-        <input type="number" class="form-control" name="plan" placeholder="Ej: 11">
+        <input type="number" class="form-control" name="plan" placeholder="Ej: 11" required>
       </div>
       </div>
-      
+
       <div class="mb-3 row g-3">
         <div class="col-sm-4">
         <label class="form-label" for="carrera" style="font-weight:bold;">Carrera</label>
-        <select type="text" class="form-select" name="carrera">
+        <select type="text" class="form-select" name="carrera" required>
           <option selected>Seleccione...</option>
-          <option value="TA">TA</option>
+          <option value="TAG">TAG</option>
           <option value="SMEC">SMEC</option>
           <option value="ADMN">ADMN</option>
           <option value="AEA">AEA</option>
@@ -150,7 +156,7 @@
         </div>
         <div class="col-sm-4">
         <label class="form-label" for="semestre" style="font-weight:bold;">Semestre</label>
-        <select type="text" class="form-select" name="semestre">
+        <select type="text" class="form-select" name="semestre" required>
           <option selected>Seleccione...</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -162,16 +168,16 @@
         </div>
         <div class="col-sm-4">
         <label class="form-label" for="grupos" style="font-weight:bold;">Grupo(s)</label>
-        <input type="text" class="form-control" name="grupos" placeholder="Ej: A,B,C,D,E,F,G">
+        <input type="text" class="form-control" name="grupos" placeholder="Ej: A,B,C,D,E" required>
         </div>
       </div>
       <div class="col-sm-12">
         <label class="form-label" for="asig" style="font-weight:bold;">Asignatura</label>
-        <select type="text" class="form-select" name="asig">
+        <select type="text" class="form-select" name="asig" required>
           <option selected>Seleccione...</option>
-          <option value="CULTURA DIGITAL 1">CULTURA DIGITAL 1</option>
-          <option value="LENGUA Y COMUNICACIÓN 1">LENGUA Y COMUNICACIÓN 1</option>
-          <option value="PENSAMIENTO MATEMÁTICO 1">PENSAMIENTO MATEMÁTICO 1</option>
+          <option value="CTD1">CULTURA DIGITAL 1</option>
+          <option value="LCM1">LENGUA Y COMUNICACIÓN 1</option>
+          <option value="PMT1">PENSAMIENTO MATEMÁTICO 1</option>
         </select>
         </div>
 
@@ -181,7 +187,7 @@
           <textarea type="text" class="form-control" name="meta"></textarea>
         </div>
       </div>
-      
+
       <div class="mb-3 row g-2">
         <div class="col-sm-6">
         <label for="prop" class="form-label" style="font-weight:bold;">Propósito formativo</label>
@@ -192,7 +198,7 @@
         <textarea type="text" class="form-control" name="temas"></textarea>
         </div>
       </div>
-      
+
       <div class="mb-3 row g-3">
         <div class="col-sm-5">
         <label for="horas_sem" class="form-label" style="font-weight:bold;">horas/semana</label>
@@ -218,41 +224,77 @@
     <div class="mb-3 row g-2">
         <div class="col-sm-6">
         <label for="trAsigP1" class="form-label" style="font-weight:bold;">Asignatura 1</label>
-        <input type="text" class="form-control" name="trAsigP1">
+          <select type="text" class="form-select" name="trAsigP1" required>
+            <option selected>Seleccione...</option>
+            <option value="CTDIG1">CULTURA DIGITAL 1</option>
+            <option value="LCOMN1">LENGUA Y COMUNICACIÓN 1</option>
+            <option value="PMATE1">PENSAMIENTO MATEMÁTICO 1</option>
+            <option value="CNNAT1">CIENCIAS NATURALES 1</option>
+            <option value="PFILH1">PENSAMIENTO FILOSÓFICO Y HUMANIDADES</option>
+            <option value="CNSOC1">CIENCIAS SOCIALES 1</option>
+            <option value="INGLS1">INGLÉS 1</option>
+          </select>
         </div>
         <div class="col-sm-6">
         <label for="trtemaP1" class="form-label" style="font-weight:bold;">Contenidos</label>
-        <txtarea type="text" class="form-control" name="trtemaP1"></txtarea>
+        <textarea type="text" class="form-control" name="trtemaP1"></textarea>
         </div>
     </div>
     <div class="mb-3 row g-2">
         <div class="col-sm-6">
         <label for="trAsigP2" class="form-label" style="font-weight:bold;">Asignatura 2</label>
-        <input type="text" class="form-control" name="trAsigP2">
+          <select type="text" class="form-select" name="trAsigP2" required>
+            <option selected>Seleccione...</option>
+            <option value="CTDIG1">CULTURA DIGITAL 1</option>
+            <option value="LCOMN1">LENGUA Y COMUNICACIÓN 1</option>
+            <option value="PMATE1">PENSAMIENTO MATEMÁTICO 1</option>
+            <option value="CNNAT1">CIENCIAS NATURALES 1</option>
+            <option value="PFILH1">PENSAMIENTO FILOSÓFICO Y HUMANIDADES</option>
+            <option value="CNSOC1">CIENCIAS SOCIALES 1</option>
+            <option value="INGLS1">INGLÉS 1</option>
+          </select>
         </div>
         <div class="col-sm-6">
         <label for="trtemaP2" class="form-label" style="font-weight:bold;">Contenidos</label>
-        <txtarea type="text" class="form-control" name="trtemaP2"></txtarea>
+        <textarea type="text" class="form-control" name="trtemaP2"></textarea>
         </div>
     </div>
     <div class="mb-3 row g-2">
         <div class="col-sm-6">
         <label for="trAsigP3" class="form-label" style="font-weight:bold;">Asignatura 3</label>
-        <input type="text" class="form-control" name="trAsigP3">
+          <select type="text" class="form-select" name="trAsigP3" required>
+            <option selected>Seleccione...</option>
+            <option value="CTDIG1">CULTURA DIGITAL 1</option>
+            <option value="LCOMN1">LENGUA Y COMUNICACIÓN 1</option>
+            <option value="PMATE1">PENSAMIENTO MATEMÁTICO 1</option>
+            <option value="CNNAT1">CIENCIAS NATURALES 1</option>
+            <option value="PFILH1">PENSAMIENTO FILOSÓFICO Y HUMANIDADES</option>
+            <option value="CNSOC1">CIENCIAS SOCIALES 1</option>
+            <option value="INGLS1">INGLÉS 1</option>
+          </select>
         </div>
         <div class="col-sm-6">
         <label for="trtemaP3" class="form-label" style="font-weight:bold;">Contenidos</label>
-        <txtarea type="text" class="form-control" name="trtemaP3"></txtarea>
+        <textarea type="text" class="form-control" name="trtemaP3"></textarea>
         </div>
     </div>
       <div class="mb-3 row g-2">
           <div class="col-sm-6">
           <label for="trAsigP4" class="form-label" style="font-weight:bold;">Asignatura 4</label>
-          <input type="text" class="form-control" name="trAsigP4">
+            <select type="text" class="form-select" name="trAsigP4" required>
+              <option selected>Seleccione...</option>
+              <option value="CTDIG1">CULTURA DIGITAL 1</option>
+              <option value="LCOMN1">LENGUA Y COMUNICACIÓN 1</option>
+              <option value="PMATE1">PENSAMIENTO MATEMÁTICO 1</option>
+              <option value="CNNAT1">CIENCIAS NATURALES 1</option>
+              <option value="PFILH1">PENSAMIENTO FILOSÓFICO Y HUMANIDADES</option>
+              <option value="CNSOC1">CIENCIAS SOCIALES 1</option>
+              <option value="INGLS1">INGLÉS 1</option>
+            </select>
           </div>
           <div class="col-sm-6">
           <label for="trtemaP4" class="form-label" style="font-weight:bold;">Contenidos</label>
-          <txtarea type="text" class="form-control" name="trtemaP4"></txtarea>
+          <textarea type="text" class="form-control" name="trtemaP4"></textarea>
           </div>
       </div>
 
@@ -265,41 +307,77 @@
       <div class="mb-3 row g-2">
         <div class="col-sm-6">
         <label for="trAsigM1" class="form-label" style="font-weight:bold;">Asignatura 1</label>
-        <input type="text" class="form-control" name="trAsigM1">
+          <select type="text" class="form-select" name="trAsigM1" required>
+            <option selected>Seleccione...</option>
+            <option value="CTDIG1">CULTURA DIGITAL 1</option>
+            <option value="LCOMN1">LENGUA Y COMUNICACIÓN 1</option>
+            <option value="PMATE1">PENSAMIENTO MATEMÁTICO 1</option>
+            <option value="CNNAT1">CIENCIAS NATURALES 1</option>
+            <option value="PFILH1">PENSAMIENTO FILOSÓFICO Y HUMANIDADES</option>
+            <option value="CNSOC1">CIENCIAS SOCIALES 1</option>
+            <option value="INGLS1">INGLÉS 1</option>
+          </select>
         </div>
         <div class="col-sm-6">
         <label for="trtemaM1" class="form-label" style="font-weight:bold;">Contenidos</label>
-        <txtarea type="text" class="form-control" name="trtemaM1"></txtarea>
+        <textarea type="text" class="form-control" name="trtemaM1"></textarea>
         </div>
       </div>
       <div class="mb-3 row g-2">
         <div class="col-sm-6">
         <label for="trAsigM2" class="form-label" style="font-weight:bold;">Asignatura 2</label>
-        <input type="text" class="form-control" name="trAsigM2">
+          <select type="text" class="form-select" name="trAsigM2" required>
+            <option selected>Seleccione...</option>
+            <option value="CTDIG1">CULTURA DIGITAL 1</option>
+            <option value="LCOMN1">LENGUA Y COMUNICACIÓN 1</option>
+            <option value="PMATE1">PENSAMIENTO MATEMÁTICO 1</option>
+            <option value="CNNAT1">CIENCIAS NATURALES 1</option>
+            <option value="PFILH1">PENSAMIENTO FILOSÓFICO Y HUMANIDADES</option>
+            <option value="CNSOC1">CIENCIAS SOCIALES 1</option>
+            <option value="INGLS1">INGLÉS 1</option>
+          </select>
         </div>
         <div class="col-sm-6">
         <label for="trtemaM2" class="form-label" style="font-weight:bold;">Contenidos</label>
-        <txtarea type="text" class="form-control" name="trtemaM2"></txtarea>
+        <textarea type="text" class="form-control" name="trtemaM2"></textarea>
         </div>
       </div>
       <div class="mb-3 row g-2">
         <div class="col-sm-6">
         <label for="trAsigM3" class="form-label" style="font-weight:bold;">Asignatura 3</label>
-        <input type="text" class="form-control" name="trAsigM3">
+          <select type="text" class="form-select" name="trAsigM3" required>
+            <option selected>Seleccione...</option>
+            <option value="CTDIG1">CULTURA DIGITAL 1</option>
+            <option value="LCOMN1">LENGUA Y COMUNICACIÓN 1</option>
+            <option value="PMATE1">PENSAMIENTO MATEMÁTICO 1</option>
+            <option value="CNNAT1">CIENCIAS NATURALES 1</option>
+            <option value="PFILH1">PENSAMIENTO FILOSÓFICO Y HUMANIDADES</option>
+            <option value="CNSOC1">CIENCIAS SOCIALES 1</option>
+            <option value="INGLS1">INGLÉS 1</option>
+          </select>
         </div>
         <div class="col-sm-6">
         <label for="trtemaM3" class="form-label" style="font-weight:bold;">Contenidos</label>
-        <txtarea type="text" class="form-control" name="trtemaM3"></txtarea>
+        <textarea type="text" class="form-control" name="trtemaM3"></textarea>
         </div>
       </div>
       <div class="mb-3 row g-2">
           <div class="col-sm-6">
           <label for="trAsigM4" class="form-label" style="font-weight:bold;">Asignatura 4</label>
-          <input type="text" class="form-control" name="trAsigM4">
+            <select type="text" class="form-select" name="trAsigM4" required>
+              <option selected>Seleccione...</option>
+              <option value="CTDIG1">CULTURA DIGITAL 1</option>
+              <option value="LCOMN1">LENGUA Y COMUNICACIÓN 1</option>
+              <option value="PMATE1">PENSAMIENTO MATEMÁTICO 1</option>
+              <option value="CNNAT1">CIENCIAS NATURALES 1</option>
+              <option value="PFILH1">PENSAMIENTO FILOSÓFICO Y HUMANIDADES</option>
+              <option value="CNSOC1">CIENCIAS SOCIALES 1</option>
+              <option value="INGLS1">INGLÉS 1</option>
+            </select>
           </div>
           <div class="col-sm-6">
           <label for="trtemaM4" class="form-label" style="font-weight:bold;">Contenidos</label>
-          <txtarea type="text" class="form-control" name="trtemaM4"></txtarea>
+          <textarea type="text" class="form-control" name="trtemaM4"></textarea>
           </div>
       </div>
 
@@ -316,13 +394,16 @@
         </div>
         <div class="col-sm-7">
           <label for="apEv" class="form-label" style="font-weight:bold;"><br>Evidencia</label>
-          <txtarea type="text" class="form-control" name="apEv"></txtarea>
+          <textarea type="text" class="form-control" name="apEv"></textarea>
         </div>
       </div>
       <div class="mb-3 row g-2">
         <div class="col-sm-7">
           <label for="apIns" class="form-label" style="font-weight:bold;"><br>Instrumentos</label>
-          <txtarea type="text" class="form-control" name="apIns"></txtarea>
+          <textarea type="text" class="form-control" name="apIns" rows="3">
+            LISTA DE COTEJO
+            GUÍA DE OBSERVACIÓN
+            CUESTIONARIO...</textarea>
         </div>
         <div class="col-sm-5">
           <label for="apPond" class="form-label" style="font-weight:bold;"><br>Ponderación (%)</label>
@@ -353,7 +434,10 @@
       <div class="mb-3 row g-2">
         <div class="col-sm-7">
             <label for="deIns" class="form-label" style="font-weight:bold;"><br>Instrumentos</label>
-            <txtarea type="text" class="form-control" name="deIns"></txtarea>
+          <textarea type="text" class="form-control" name="deIns" rows="3">
+            LISTA DE COTEJO
+            GUÍA DE OBSERVACIÓN
+            CUESTIONARIO...</textarea>
           </div>
           <div class="col-sm-5">
             <label for="dePond" class="form-label" style="font-weight:bold;"><br>Ponderación (%)</label>
@@ -385,7 +469,10 @@
       <div class="mb-3 row g-2">
       <div class="col-sm-7">
         <label for="ciIns" class="form-label" style="font-weight:bold;"><br>Instrumentos</label>
-        <txtarea type="text" class="form-control" name="ciIns"></txtarea>
+        <textarea type="text" class="form-control" name="ciIns" rows="3">
+          LISTA DE COTEJO
+          GUÍA DE OBSERVACIÓN
+          CUESTIONARIO...</textarea>
       </div>
       <div class="col-sm-5">
         <label for="ciPond" class="form-label" style="font-weight:bold;"><br>Ponderación (%)</label>
@@ -398,6 +485,7 @@
         <textarea type="text" class="form-control" name="ciAct" rows="5"></textarea>
         </div>
       </div>
+
       {% set ns = namespace(total=0) %}
 
             {% for i in plan %}
@@ -410,7 +498,7 @@
 
             {% endfor %}
 
-            <text class='partial-footer-total'>Total ponderado: {{ ns.total }}%</text>             
+            <text class='partial-footer-total'>Total ponderado: {{ ns.total }} %</text>             
 
 <br>
 
@@ -428,10 +516,15 @@
                     {% set ns.total = ns.total + parcial_sum %}
 
             {% endfor %}
-      
+
 
             <text class='partial-footer-total'>Total tiempo: {{ ns.total/60 }}                         hrs</text>
-      <br><br><br>
+      <br><br>
+      <div class="col-sm">
+        <label for="parPond" class="form-label" style="font-weight:bold;">Ponderación de esta planeación dentro del parcial (%):</label>
+        <input type="number" class="form-control" name="parPond" placeholder="25">
+      </div>
+      <br>
 
 
     <div style="background-color:rgb(120,120,0,0.5)">
@@ -468,21 +561,24 @@
         <label for="avala" class="form-label" style="font-weight:bold;">Avala:</label>
         <input type="text" class="form-control" name="avala"></input>
 
-          
+
         <input type="hidden" class="form-control" name="cve"></input>
         <br><br>
-  
-          
-          
+
+
+
         </div>
       <label>Instrumentos<br>Archivo PDF:</label> 
         <input type="file" name="pdf_file" accept="application/pdf" required
           ><br><br>
-      <button type="submit" class="btn btn-primary btn-sm">Enviar</button>
+    <div>
+      <button type="submit" class="btn btn-success btn-sm">Enviar</button>
+    </div>
         <!--<a href="{{ request.referrer }}">
             <button type="button" href="{{ url_for('register') }}">Cancelar</button>
         </a> -->
-        <a class="btn btn-secondary btn-sm" type="button" href="{{ url_for('hello_pm1') }}">Regresar al inicio:</a>
+    <div>
+        <a class="btn btn-danger btn-sm" type="button" href="{{ url_for('hello_pm1') }}">Regresar al inicio:</a>
     </div>
 
 <!--

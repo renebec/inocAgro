@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-    
+
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
@@ -22,7 +22,7 @@
       });
     </script>
 
-    
+
 <body>
     <div class="container mt-5">
 
@@ -69,13 +69,13 @@
                 <label for="nombres" class="form-label">Nombres</label>
                 <input type="text" class="form-control" id="nombres" name="nombres" required>
             </div>
-            
-            
-            
+
+
+
             <button type="submit" class="btn btn-success">Registrarse</button>
 
         <br>
-        <a href="{{ url_for('login') }}">¿Ya tienes cuenta? Inicia sesión aquí</a>
+        <a href="{{ url_for('login') }}">Salir sin hacer el registro</a>
     </div>
     <br><br><br><br><br><br>
 </body>
