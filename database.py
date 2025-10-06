@@ -81,7 +81,7 @@ def load_pg_from_db3():
     try:
       with engine.connect() as conn:
           #result = conn.execute(text("SELECT * FROM planInocAgro ORDER BY created_at DESC"))
-          result = conn.execute(text("SELECT * FROM webContent"))
+          result = conn.execute(text("SELECT * FROM webCont"))
           pg3 = result.mappings().all()
           return pg3
     except Exception as e:

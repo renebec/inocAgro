@@ -519,7 +519,7 @@ def handle_register_user(choice):
             ).fetchone()
 
             if existing_user:
-                flash("Ese nombre de usuario ya está registrado. Por favor, elige otro.", "danger")
+                flash("Ese nombre de usuario ya está registrado. Elige otro.", "danger")
                 return render_template(template)
 
             success = register_user(
