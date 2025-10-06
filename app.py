@@ -497,7 +497,7 @@ def handle_register_user(choice):
                 flash("El número de control corresponde a un docente.", "danger")
                 return render_template(template)
 
-            if not is_preregistered(controlnum):
+            if not is_preregistered(numero_control):
                 flash("Número de control no está preregistrado; no se puede registrar.", "danger")
                 return render_template(template)
 
@@ -537,7 +537,7 @@ def handle_register_user(choice):
             )
 
             if not success:
-                flash("Ese nombre de usuario ya está registrado. Por favor, elige otro.", "danger")
+                flash("Ese nombre de usuario ya está registrado. Elige otro.", "danger")
                 return render_template(template)
 
             flash(f"Registro exitoso para {nombres}!", "success")
