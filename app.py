@@ -537,7 +537,7 @@ def handle_register_user(choice):
             )
 
             if not success:
-                flash("Ese nombre de usuario ya está registrado. Elige otro.", "danger")
+                flash("Error al cargar en la base de datos.", "danger")
                 return render_template(template)
 
             flash(f"Registro exitoso para {nombres}!", "success")
