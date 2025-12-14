@@ -130,7 +130,7 @@ def load_all_pdfs(session_db):
 def load_user_pdfs(session_db, numero_control):
     query = text("""
         SELECT pdf_url, created_at, numero_control
-        FROM registros
+        FROM actividades
         WHERE numero_control = :numero_control
         ORDER BY created_at DESC, numero_control DESC
     """)
