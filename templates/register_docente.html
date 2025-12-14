@@ -31,20 +31,20 @@
 
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
-                    <div class="alert alert-danger" id="flashMessage" role="alert">
-                        {{ messages[0] }}
-                    </div>
-                    <script>
+            <div class="alert alert-danger" id="flashMessage" role="alert">
+                    {{ messages[0] }}
+            </div>
+            <script>
                         // Hide the flash message after 5 seconds
                         setTimeout(function() {
                             document.getElementById("flashMessage").style.display = "none";
                         }, 3000);  // 5000 milliseconds = 5 seconds
-                    </script>
+            </script>
                 {% endif %}
             {% endwith %}
 
             <div class="mb-3">
-                <label for="username" class="form-label">Nombre de Usuario</label>
+                <label for="username" class="form-label">Nombre de Usuario (SIN espacios y de preferencia corto)</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="mb-3">
@@ -54,9 +54,14 @@
             <br>
             <br>
             <div class="mb-3">
-                <label for="numero_control" class="form-label">Número de Control</label>
+                <label for="numero_control" class="form-label">RFC</label>
                 <input type="text" class="form-control" id="numero_control" name="numero_control" required>
             </div>
+
+            <br>
+            <br>
+
+
             <div class="mb-3">
                 <label for="apellido_paterno" class="form-label">Apellido paterno</label>
                 <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" required>
@@ -70,12 +75,47 @@
                 <input type="text" class="form-control" id="nombres" name="nombres" required>
             </div>
 
+            <div class="mb-3 row g-3">
+                  <div class="col-sm-4">
+                  <label for="plantel" class="form-label" style="font-weight:bold;">Plantel</label>
+                  <select type="text" class="form-select" name="plantel" required>
+                      <option selected>Seleccione...</option>
+                      <option value="CBTA 30">CBTA 30</option>
+                      <option value="CBTA 40">CBTA 40</option>
+                      <option value="CBTA 61">CBTA 61</option>
+                      <option value="CBTA 103">CBTA 103</option>
+                      <option value="CBTA 204">CBTA 204</option>
+                      <option value="CBTA 205">CBTA 205</option>
+                    </select>
+                  </div>
 
+                  <!--<div class="col-sm-12">
+                    <label class="form-label" for="claveOut" style="font-weight:bold;">Clave actual</label>
+                    <select type="text" class="form-select" name="claveOut" required>
+                      <option selected>Seleccione...</option>
+                      <option value="E4325">E4323</option>
+                      <option value="E4325">E4325</option>
+                      <option value="E4327">E4327</option>
+                    </select>
+                    </div>
 
-            <button type="submit" class="btn btn-success">Registrarse</button>
+                      <div class="col-sm-12">
+                    <label class="form-label" for="claveIn" style="font-weight:bold;">Clave a la que aspira</label>
+                    <select type="text" class="form-select" name="claveIn" required>
+                      <option selected>Seleccione...</option>
+                      <option value="E4325">E4323</option>
+                      <option value="E4325">E4325</option>
+                      <option value="E4327">E4327</option>
+                      <option value="E4329">E4329</option>
+                    </select>
+                    </div>
+                -->
+        </form>
+
+        <button type="submit" class="btn btn-success">Registrarse</button>
 
         <br>
-        <a href="{{ url_for('login') }}">Salir sin hacer el registro</a>
+        <a href="{{ url_for('login') }}">¿Ya tienes cuenta? Inicia sesión aquí</a>
     </div>
     <br><br><br><br><br><br>
 </body>

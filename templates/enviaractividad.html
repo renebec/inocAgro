@@ -8,25 +8,33 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 <body>
   <main class="container">
-  <h3>Enviar actividad:</h3>
-  
-    <form method="POST" enctype="multipart/form-data" action="{{ url_for('enviaractividad') }}">
-    <label>Número de actividad:</label> <br>
-    <input type="text" name="actividad_num" placeholder="7" required> <br>
+  <h3>Enviar documento:</h3>
 
     <form method="POST" enctype="multipart/form-data" action="{{ url_for('enviaractividad') }}">
-    <label>Número de control:</label> <br>
-    <input type="text" name="numero_control" placeholder="20250001" required> <br>
-  
-  
-    <label>Archivo PDF:</label> 
+
+
+    <label>RFC:</label> <br>
+    <input type="text" name="numero_control" placeholder="RFC" required> <br>
+
+      <div class="mb-3 row g-3">
+        <div class="col-sm-4">
+        <label for="plantel" class="form-label" style="font-weight:bold;">Plantel</label>
+          <select type="text" class="form-select" name="plantel" required>
+            <option selected>Seleccione...</option>
+            <option value="CBTA 30">CBTA 30</option>
+            <option value="CBTA 40">CBTA 40</option>
+            <option value="CBTA 61">CBTA 61</option>
+            <option value="CBTA 103">CBTA 103</option>
+            <option value="CBTA 204">CBTA 204</option>
+            <option value="CBTA 205">CBTA 205</option>
+          </select>
+        </div>
+
+    <label>Archivo PDF (Max 10MB):</label> 
     <input type="file" name="pdf_file" accept="application/pdf" required><br><br> 
-    <button type="submit">Enviar</button>  
-      <a href="{{ request.referrer }}">
-          <button type="button">Cancelar</button>
-      </a>                     
+    <button type="submit" class="btn btn-primary">Enviar</button>
+    <a href="{{ url_for('hello_pm1') }}" class="btn btn-secondary">Cancelar</a>
   </form>
   </main>
 </body>
 </html>
-  
