@@ -82,6 +82,10 @@ def hello_pm1():
     # 3. Conexión a DB
     session_db = get_db_session()
 
+    # ✅ Inicializar SIEMPRE
+    es_profesor = bool(is_master)
+    pdfs = []
+
     try:
         # 4. Cargar PDFs según el tipo de usuario
         if is_master:
