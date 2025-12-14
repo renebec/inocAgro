@@ -3,67 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>cbta205</title>
+  <!--
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 
-  
-    
+<script>
+      function updateDateTime() {
+          // Get the current date and time in Central Mexico
+          let options = {
+              timeZone: "America/Mexico_City",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: true
+          };
+
+          let currentDateTime = new Date().toLocaleString("es-MX", options);
+
+          // Format the date and time as "9 de abril de 2025, 09:40:00"
+          const dateTimeElement = document.getElementById('date-time');
+          if (dateTimeElement) {
+              dateTimeElement.innerHTML = currentDateTime;
+          }
+      }
+
+      // Update the time every second
+      setInterval(updateDateTime, 1000);
+
+      // Initial call to set the time immediately
+      updateDateTime();
+</script>
+
+
+<style>
+
+  .container{
+      margin-left:auto;
+      margin-right:auto;
+      text-align:justify;
+  }
+
+  #portada{
+    object-fit:cover;
+    max-width:100%;
+    max-height:240px;
+  }
+
+
+
+  .banner2 {
+      display:block;
+      margin-left:auto;
+      margin-right:auto;
+      max-height:200px;
+      object-fit:cover;
+      object-position: 0px -0px;
+  }
+
+  .logox {
+      display:block;
+      margin-left:auto;
+      margin-right:auto;
+      max-height:220px;
+      max-width:185px;
+  }
+
+  #avisos {
+      display:block;
+      margin-left:auto;
+      margin-right:auto;
+      object-fit:fill;
+      object-position: 0px 0px;
+  }
+
+  #banner {
+      display:block;
+      margin-left:auto;
+      margin-right:auto;
+      width:100%;
+      max-height: 280px;
+      object-fit:cover;
+  }
+
+</style>
+
 <body>
-    <div class="container mt-5">
-        <!-- FLASH MESSAGES -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+
+  <div class="container col-12 mt-5 col-md-9">
 
 
+    <div class="row">
+            <!-- foto de la escuela -->
+      <div class="row justify-content-center"> 
+        <img id="banner" src="https://cbta205.onrender.com/static/cbta.jpg"> 
+      </div>
+      <div class="d-block d-sm-none">
+              <!-- Este contenido solo será visible en móviles -->
+              <br><br>
+       </div>
 
-        <form method="post" action="{{ url_for('login') }}">
-        <!--<form id="myform" method="POST" action="choice">-->
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+      <hr>
+
+      <div class="row justify-content-center">
+          <img class="logox" src="https://cbta205.onrender.com/static/logo205.jpg">
+      </div>
+
+        <h1 style="color:#1CD93B;">Centro de Bachillerato Tecnológico Agropecuario No.205</h1>
+
+          <!--BOTON CONTACTO -->
+      <div style="text-align:start;">
+        Escríbenos tus preguntas y comentarios	&#128073;
+        <a class="btn btn-primary btn-lg"  type="button"  
+                href="mailto:ags.cbta205.depacadycomp@dgetaycm.sems.gob.mx?cc=ags.cbta205.subacad@dgetaycm.sems.gob.mx&bcc=ags.cbta205.direccion@dgetaycm.sems.gob.mx&subject=Consulta&body=Nombre%20y%20apellidos%3A%0APregunta%20o%20comentario%3A">&#128231;</a>
+      </div>
+
+      <div style="text-align:left;padding-left:20px;">
+        <text style="font-size:11px;color:#04AA6D;" id="date-time"></text>&nbsp;
+        <text style="font-size:11px;color:#04AA6D;">, </text>
+        <text style="font-size:11px;color:#04AA6D;" id="time"></text>
+      </div>
+    </div>
+    <br><br>
+
+    <hr>
+
+    <div id="avisos">
+
+        <div class="row justify-content-between">
+
+          <div class="col-12 col-md-4">
+
+            Diciembre 3<br>
+            Entrega de <b>boletas de calificaciones</b>.<br><br>
+
+            <img class="img-fluid" max-height="160" max-width="550" src="https://images.pexels.com/photos/289737/pexels-photo-289737.jpeg">
+            <div class="d-block d-sm-none">
+              <!-- Este contenido solo será visible en móviles -->
+              <br><br>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+
+          <div class="col-12 col-md-4">
+
+            Diciembre 13<br>
+            Entrega de tarjetas beca Benito Juárez.
+            <br><br>
+            <img class="img-fluid" max-height="160" max-width="550" src="https://yoremiacalificaciones.com.mx/wp-content/uploads/2023/05/beca-benito-1.jpg">
+            <div class="d-block d-sm-none">
+              <!-- Este contenido solo será visible en móviles -->
+              <br><br>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <br>
-            <br>
-            
-            <a>No tienes una cuenta?</a>
-            <br>
-          
-            <form id="myform" method="POST" action="choice">
-              <label>
-                <input type="checkbox" name="choice" value="D" class="single-checkbox"> Realizar registro.
-              </label>
-              <br>
+          </div>
 
-              <br>
 
-              <a href="#" id="register-link">Continuar &#128072;</a>
-              <!--<a type="button" href="{{ url_for('register') }}">Haz click para registrarte:</a>-->
-            </form>
-                <br><br>
 
-            <br>
-             
-        </form>
-        
+          <div class="col-12 col-md-4">
+            Diciembre<br>
+            Se acerca el <b>aniversario</b> de
+            nuestra escuela. Celébralo con nosotros.<br>
+            <img class="img-fluid" max-height="160" max-width="550" src="https://images.pexels.com/photos/1303099/pexels-photo-1303099.jpeg">
+          </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block">
+      <!-- Este contenido sólo se verá en pantallas grandes (lg / >= 992px) -->
+      <br><br>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="row justify-content-between">
+    <div class="col-12 col-md-8">
+      <h1>Nuestra oferta educativa</h1>
+      <p>
+        Estudia el bachillerato con nosotros para obtener además una carrera técnica con tres opciones:
+        <b>Técnico Agropecuario, Técnico en Administración de Emprendimientos</b> y además 
+        <b>Técnico en Soporte y Gestión de Tecnologías Informáticas.</b>
+      </p>
+
+      <a href="https://cosfac.sems.gob.mx/Programas_presenciales/2023/PROGRAMA_DE_ESTUDIOS_AGROPECUARIO.pdf" target="_blank">
+      Técnico Agropecuario
+      <br><br>
+      </a>
+
+      <a href="https://cosfac.sems.gob.mx/Programas_presenciales/2024/ADMINISTRACION_EMPRENDIMIENTOS1.pdf" target="_blank">
+      Administración de emprendimientos
+      <br><br>
+      </a>
+      <a href="https://cosfac.sems.gob.mx/Programas_presenciales/2025/SOPORTE_Y_GESTION_DE_TECNOLOGIAS_INFORMATICAS.pdf" target="_blank">
+      Soporte y Gestión de Tecnologías Informáticas
+      <br><br><br>
+      </a>
+
     </div>
 
 
+    <div class="col-12 col-md-4">
+      <!--<img class="img-fluid" src="https://images.pexels.com/photos/6929195/pexels-photo-6929195.jpeg">-->
+      <img class="img-fluid" max-width="270"  src="https://cbta205.onrender.com/static/garapinado2.jpg">
 
-  
+    </div>
+  </div>
+  <div class="row justify-content-between">
+    <div class="col-12 col-md-8 mt-2">
+      <!--<img class="img-fluid" src="https://images.pexels.com/photos/6929195/pexels-photo-6929195.jpeg">-->
+      <img class="img-fluid d-none d-md-block" max-width="500"  src="https://cbta205.onrender.com/static/chilesz2.jpg">
+      <div class="d-block d-sm-none">
+              <!-- Este contenido solo será visible en móviles -->
+              <br><br>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <!--<img class="img-fluid" src="https://images.pexels.com/photos/6929195/pexels-photo-6929195.jpeg">-->
+      <img class="img-fluid" max-width="270"  src="https://cbta205.onrender.com/static/chilesx3.jpg">
+      <div class="d-block d-sm-none">
+              <!-- Este contenido solo será visible en móviles -->
+              <br><br>
+            </div>
+    </div>
+  </div>
+
+    <hr>
+
+    <div class="row justify-content-center">
+
+        <img class="logox"   src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnF3cnVjZXJxbjlsZzM3cDRteHRpZ3Q0bThmb2l0amF3MzB4d3A3ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/QaN5BogCfpp6hQ4GA9/giphy.gif">
+        <div class="d-block d-sm-none">
+              <!-- Este contenido solo será visible en móviles -->
+              <br><br>
+            </div>
+
+    </div>
+    <br><br>
+      <div class="d-none d-lg-block">
+        <!-- Este contenido sólo se verá en pantallas grandes (lg / >= 992px) -->
+        <br><br>
+      </div>
+
+      <hr>
+
+          <section class="col-12 col-md-6" style="background-color:#98FA6E;padding:1%;font-size:"14px">
+              <!-- FLASH MESSAGES -->
+              {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                  {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                      {{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
+
+              <form method="post" action="{{ url_for('login') }}">
+              <!--<form id="myform" method="POST" action="choice">-->
+              <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input maxlenght="20" size="20" type="text" 
+                      id="username" name="username" required>
+               </div>
+               <div class="mb-3">
+                   <label for="password" class="form-label">Password</label>
+                   <input type="password"  maxlenght="20" size="20" id="password" name="password" required>
+               </div>
+               <button type="submit" class="btn btn-primary">Login</button>
+               <br>
+
+                <a>¿No tienes una cuenta?</a>
+                <br>
+
+                <form id="myform" method="POST" action="choice">
+                    <label>
+                    <input type="checkbox" name="choice" value="D" class="single-checkbox"> ¿Quieres registrarte?
+          </label>
+          <br>
+
+                    <a href="#" id="register-link">Continuar &#128209;</a>
+                    <!--<a type="button" href="{{ url_for('register') }}">Haz click para registrarte:</a>-->
+                </form>
+            </section>
+            <br><br>
+      <div class="d-none d-lg-block">
+        <!-- Este contenido sólo se verá en pantallas grandes (lg / >= 992px) -->
+        <br><br>
+      </div>
+
+
+
+    <hr>
+
+                    <br><br>
+
+
+                 <h2>Clima y estado del tiempo<br></h2>
+                 <br>
+                 Consulta el pronóstico del tiempo en tu municipio desde el <a href="https://smn.conagua.gob.mx/es/pronostico-del-tiempo-por-municipios"
+                 target="_blank">Servicio Meteorológico Nacional</a>
+
+                 <br><br>
+                 <h4>Datos en tiempo real</h4>
+          (Estación La Guayana, Sn Francisco de los Romo).<br>
+          Consulta nuestro datos climatológicos registrados cada media hora.
+
+            <div class="row justify-content-between">
+        <div class="col-12 col-md-6">
+          <div class="iframe-wrapper" style="position: relative; padding-top: 56.25%; /* 16:9 ratio */">
+            <iframe src="https://thingspeak.com/channels/2842388/charts/3?bgcolor=%23FFC300&color=%23d62020&dynamic=true&results=300&round=2&timescale=30&title=Temperatura+%C2%B0C&type=line&xaxis=Fecha+y+hora&yaxis=Temperatura" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>
+          </div>	
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="iframe-wrapper" style="position: relative; padding-top: 56.25%; /* 16:9 ratio */">
+            <iframe src="https://thingspeak.com/channels/2842388/charts/4?bgcolor=%23DAF7A6&color=%23d62020&dynamic=true&results=300&round=2&timescale=30&title=%25+Humedad+del+aire&type=line&xaxis=Fecha+y+hora&yaxis=Humedad" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>
+          </div>	
+        </div>
+      </div>
+
+
+
+
+
+
+            <br><br>
+            <hr>
+
+          <div style="text-align:center;">
+          Correo de contacto<br>
+                <a class="btn btn-primary btn-lg"  type="button"  
+                href="mailto:ags.cbta205.depacadycomp@dgetaycm.sems.gob.mx?cc=ags.cbta205.subacad@dgetaycm.sems.gob.mx&bcc=ags.cbta205.direccion@dgetaycm.sems.gob.mx&subject=Consulta&body=Nombre%20y%20apellidos%3A%0APregunta%20o%20comentario%3A">&#128231;</a>
+                <br><br><br>
+            </div>
+
+
+      </div>
+
+
+
+    </div>
+
+<br>
+            <br><br><br>
+
+
 
   <script>
     document.getElementById("register-link").addEventListener("click", function (e) {

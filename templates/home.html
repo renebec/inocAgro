@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>cbta205</title>
     <link             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,6 +80,27 @@
         .noexist {
 
         }
+        .container{
+            margin-left:auto;
+            margin-right:auto;
+            text-align:justify;
+        }
+        .apertura{
+            padding:10px;
+            background-color:rgba(50, 250, 37, 0.25);
+        }
+        .desarrollo{
+            padding:10px;
+            background-color:rgba(247, 234, 47, 0.3);
+        }
+
+        .cierre{
+            padding:10px;
+            background-color:rgba(250, 117, 221, 0.25);
+            color:#B51767;
+        }
+
+
 
 
     </style>
@@ -88,7 +109,7 @@
         <nav class="navbar fixed-top bg-white shadow-sm mb-4">
             <div class="container-fluid d-flex justify-content-between row">
                 {% if session.username %}
-                <span class="navbar-brand mb-0 h1 navtxt col-7">NEM user: {{session.username}}</span>
+                <span class="navbar-brand mb-0 h1 navtxt col-7">Usuario: {{session.username}}</span>
                 {% endif %}
             </div>
             <a href="{{ url_for('logout') }}" class="btn btn-danger btn-sm col-5" id="btnCerrar">Cerrar Sesión</a>
@@ -96,7 +117,7 @@
 
 
 
-        <img class="mt-5" id="banner" src= "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExc215NjMydnV1aGhzYm0xZnZuY3h1am04aXBsOXcwNHc5YWhucWYwMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mJm6nVIf96cBpBNskS/giphy.gif">
+        <img class="mt-5" id="banner" src= "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExczVjMG5xeXByZnAydHNsdWRuejBvdGltMms2aWkzdWg3czc1bm1nMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zqtOYPQZ8Kb5pMlH8p/giphy.gif">
 
 
 
@@ -120,215 +141,214 @@
     </div>
 <body>
     <header>
-        <div>            
-            <!--{% set item = (pg 
-            | selectattr('carrera', 'equalto', 'TA') 
-            | selectattr('semestre', 'equalto', 1) 
-            | first) %}-->
-            {% set item = (pg | selectattr('parcial', 'equalto', 'PARCIAL 1') |                 first) %}
 
-            {% if item %} 
-            <h1 class="text-center mt-4 mb-2" style="color:rgb(100,100,100);">
-                {{item['asig']}}
-            </h1>
-            {% endif %} 
-        </div>
     </header>
 
 
-    <main class="container">
-        <p style="text-align:right;color:rgb(150,150,150);">@ by M.C. Héctor René Becerril Cejudo</p>
+    <main class="container col-12 col-md-9">
+        <p style="text-align:right;color:rgb(150,150,150);">@ by HRBC.</p>
 
-        <br>
-        <br>
+        {% if info %}
+          <div class="alert alert-info mt-3">
+            {{ info }}
+          </div>
+        {% endif %}
 <!--        <a href="https://dgetaycm.sep.gob.mx/Con%C3%B3cenos/2" target="_blank">Acerca de DGETAyCM</a>&#128072;<br>
         <a href="https://renebec.github.io/mapdgetaycm/" target="_blank">Mapa de planteles</a>&#128072;
+
  -->       
         <h2 class="text-center mt-4 mb-2" style="color:rgb(100,100,100);">
-        </h2>
+        Avisos en general</h2>
 
-        {% set item = (pg | selectattr('parcial', 'equalto', 'PARCIAL 1') |                 first) %}
-        {% if item is defined and item.meta | default(false) %}
-
-        <p class="lead">
-            {{ item.meta }}
-        </p>
-        {% endif %}
 <br><br>
-        <p class="lead">   
-            <i style="color:rgb(150,150,150);font-size:16px">M.C. Héctor René Becerril Cejudo</i><br><i style="color:rgb(150,150,150);font-size:16px">Aguascalientes, México.</i>
-        </p>
-
 
 
         {% if es_profesor %}
-        <a  href="{{ url_for('plan_carga') }}">
-              <button type="submit" class="btn btn-warning">Subir una planeación</button>
-        </a>
+
+
+
+        <a href="{{ url_for('enviaractividad') }}" class="btn btn-warning">Subir un archivo PDF</a>
         {% endif %}
 
+        {% if is_master %}
+            <h3>Todos los PDFs cargados</h3>
+        {% else %}
 
-        <div>            
-            {% set item = (pg | selectattr('parcial', 'equalto', 'PARCIAL 1') |                 first) %}
-
-            {% if item %}
-                <h2 class="text-center mt-4 mb-2" style="padding-                                           bottom:16px;color:rgb(100,100,100);">
-                    {{item['parcial']}}
-            </h2>
-            {% endif %}
+        <div style="background-color:#acEbA9" class="row justify-content-between">
+            <div class="col-12 col-md-4 mt-0">
+                <p>
+                    <h3>Campaña de potenciación<br>
+                    del seguro institucional</h3>
+                    Acércate a recursos humanos para
+                    actualizar tus datos del seguro
+                    institucional.
+                </p>
+            </div>
+            <div style="background-color:#EaEc99" class="col-12 col-md-4 mt-0">
+                <p>
+                    <h3>Código de ética</h3>
+                    No olvides firmar el acuse de difusión
+                    del <i>código de ética</i>.
+                </p>
+            </div>
+            <div class="col-12 col-md-4 mt-0">
+                <p>
+                    <h3>Becas SNTE</h3>
+                    No olvides participar en la rifa de bacas SNTE.
+                </p>
+            </div>
         </div>
+        <br>
+        <br>
 
+        <hr>
+
+        <!--Material docentes -->
         <div>
-            {% for i in pg %}
-                {% if i['parcial'] == 'PARCIAL 1' %}
-                    {% include 'temasitem.html' %}
-                {% endif %}
+              <h1>Material para docentes</h1>
+              <div class="row justify-content-between">
+                <div class="col-12 col-md-3">
+                  <a href="https://registro.desarrolloprofesionaldocente.sems.gob.mx/" target="_blank">
+                    Cursos de formación docente<br>
+                    <img class="img-fluid" max-width="280" max-height="190" src="https://gaceta.cch.unam.mx/sites/default/files/media-image/pag_11a_6.png">
+                    <div class="d-block d-sm-none">
+                      <!-- Este contenido solo será visible en móviles -->
+                      <br><br>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-12 col-md-3">
+                  <a href="https://mexico.learningpassport.org/" target="_blank">
+                    Pasaporte al aprendizaje<br>
+                    <img class="img-fluid" max-width="280" max-height="190" src="https://d1fdloi71mui9q.cloudfront.net/MtxVa91zRAuiJr4RM2wX_videos.PNG">
+                    <div class="d-block d-sm-none">
+                      <!-- Este contenido solo será visible en móviles -->
+                      <br><br>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-12 col-md-3">
+                    <a href="https://innoversia.net/top-plataformas-educativas-profesores-guia-aula/" target="_blank">
+                      <a href="https://eventos.activa.la/google-dgetaycm/certificaciones"  target="_blank"> <h2>Google</h2> cursos y certificaciones.</a><br>
+                      <img class="img-fluid" max-width="280" max-height="190" src="https://static.vecteezy.com/system/resources/previews/010/930/001/original/google-logo-icon-illustration-free-vector.jpg"><br>
+                      Video con las <a href="https://youtu.be/0KsxQ64jmMo?si=mBei1QXD0vv_Lp6j" target="_blank">instrucciones.</a>
+                      <div class="d-block d-sm-none">
+                        <!-- Este contenido solo será visible en móviles -->
+                        <br><br>
+                      </div>
+                    </a>
+                  </div>
+              </div>
 
-            {% endfor %}
-        </div>
-        <text></text>
-        <text class='partial-footer-total'>Parcial 1</text>
-        <div>
-
-            {% set ns = namespace(total=0) %}
-
-            {% for i in pg %}
-                {% if i['parcial'] == 'PARCIAL 1' %}
-                    {% set apertura = i['apPond'] | int %}
-                    {% set desarrollo = i['dePond'] | int %}
-
-                    {% set cierre = i['ciPond'] | int %}
-                    {% set parcial_sum = apertura + desarrollo + cierre %}
-                    {% set ns.total = ns.total + parcial_sum %}
-                {% endif %}
-            {% endfor %}
-
-            <text class='partial-footer-total'>Total ponderado: {{ ns.total/5 }}% </text>
                 <br>
+                <div class="row justify-content-start">
 
-            {% set ts = namespace(total=0) %}
+                  <div class="col-12 col-md-4"  align="left">
+                    <a href="https://www.gob.mx/semarnat/documentos/centros-de-educacion-y-cultura-ambiental" target="_blank">
+                      Centros de Educación y Cultura Ambiental<br>
+                      <img class="img-fluid" max-width="280" max-height="190" src="https://images.pexels.com/photos/886521/pexels-photo-886521.jpeg">
+                      <div class="d-block d-sm-none">
+                        <!-- Este contenido solo será visible en móviles -->
+                        <br><br>
+                      </div>
+                    </a>
+                  </div>
 
-            {% for i in pg %}
-                {% if i['parcial'] == 'PARCIAL 1' %}
-                    {% set tapertura = i['apDur'] | int %}
-                    {% set tdesarrollo = i['deDur'] | int %}
+                    <div class="col-12 col-md-4"  align="center">
+                        <h2>Planes y programas</h2>
+                        <ul align="left">
+                        <li><a href="https://cosfac.sems.gob.mx/Programas_presenciales/2023/PROGRAMA_DE_ESTUDIOS_AGROPECUARIO.pdf" target="_blank">
+                              Técnico Agropecuario</a></li>
 
-                    {% set tcierre = i['ciDur'] | int %}
-                    {% set tparcial_sum = tapertura + tdesarrollo + tcierre %}
-                    {% set ts.total = ts.total + tparcial_sum %}
-                {% endif %}
-            {% endfor %}
+                         <li><a href="https://cosfac.sems.gob.mx/Programas_presenciales/2024/ADMINISTRACION_EMPRENDIMIENTOS1.pdf" target="_blank">
+                              Administración de Emprendimientos</a></li>
+                             <li><a href="https://cosfac.sems.gob.mx/Programas_presenciales/2025/SOPORTE_Y_GESTION_DE_TECNOLOGIAS_INFORMATICAS.pdf" target="_blank">
+                              Soporte y Gestión de Tecnologías Informáticas
+                              </a></li>
+                         </ul>
+                    </div>
+                    <div class="d-block d-sm-none">
+                        <!-- Este contenido solo será visible en móviles -->
+                        <br><br>
+                      </div>
+                    <div class="col-12 col-md-4" align="center">
+                        <a href="http://168.255.121.25/develop/index.php" target="_blank">Subir calificaciones a SISEEMS.<br>
+                            <img  src="https://cbta205.onrender.com/static/SISEEMS.png" class="img-fluid" max-height="190" max-width="280">
+                        
+                    
 
-            <text class='partial-footer-total'>Total tiempo: {{ ts.total/60 }} hrs</text>
-        </div>   
+                    <div class="d-block d-sm-none">
+                        <!-- Este contenido solo será visible en móviles -->
+                        <br><br>
+                      </div>
+                    </a>
 
-        <div>                     
-                {% set item = (pg | selectattr('parcial', 'equalto', 'PARCIAL 2') |                 first) %}
+                </div>
+              </div>
+            <br><br>
+            <div class="row justify-content-between">
 
-                {% if item %}
-                <h2 class="text-center mt-4 mb-2" style="padding-                                       bottom:16px;color:rgb(100,100,100);">
-                    {{item['parcial']}}
-                </h2>
-                {% endif %}
-        </div>
-        <br>
+              <div class="col-12 col-md-4"  align="center">
+                <a href="https://portalautoservicios-sems.sep.gob.mx/login.jsp;jsessionid=541df8d7c4712483b31cd59cd075" target="_blank">
+                  Descarga tus talones de pago<br>
+                  <img class="img-fluid" max-width="280" max-height="160" src="https://images.pexels.com/photos/7534805/pexels-photo-7534805.jpeg">
+                  <div class="d-block d-sm-none">
+                    <!-- Este contenido solo será visible en móviles -->
+                    <br><br>
+                  </div>
+                </a>
+              </div>
+
+                  
+
+                  <div class="col-12 col-md-4"  align="center">
+                      <a href="http://plataforma-dgetaycm.sep.gob.mx/plataforma/plataforma/" target="_blank">
+                        Registrar planeaciones didácticas<br>
+                        <img class="img-fluid" max-width="280" max-height="160" src="https://images.pexels.com/photos/7718886/pexels-photo-7718886.jpeg">
+                        <div class="d-block d-sm-none">
+                          <!-- Este contenido solo será visible en móviles -->
+                          <br><br>
+                        </div>
+                      </a>
+                  </div>
+                  
+              </div>
 
 
-        <div>
-            {% for i in pg %}
-                {% if i['parcial'] == 'PARCIAL 2' %}
-                    {% include 'temasitem.html' %}
-                {% endif %}
-            {% endfor %}
-        </div>
-        <text class= 'partial-footer-total'>Parcial 2</text>
-        <div>
-            {% set ns = namespace(total=0) %}
+        <!-- PDF's -->
+        <!--
+        <br><br><br>
+            <h3>Tus PDFs</h3>
+        {% endif %}
 
-            {% for i in pg %}
-                {% if i['parcial'] == 'PARCIAL 2' %}
-                    {% set apertura = i['apPond'] | int %}
-                    {% set desarrollo = i['dePond'] | int %}
+        {% if pdfs %}
+        <ul>
+        {% for pdf in pdfs %}
+            <li>
+                <a href="{{ pdf.pdf_url }}" target="_blank">Ver PDF</a>
+                (Subido: {{ pdf.created_at }})
+            </li>
+        {% endfor %}
+        </ul>
+        {% else %}
+            {% if is_master %}
+                <p>No hay ningún PDF cargado todavía.</p>
+            {% else %}
+                <p>Todavía no has subido PDFs.</p>
+            {% endif %}
+        {% endif %}
+        -->
 
-                    {% set cierre = i['ciPond'] | int %}
-                    {% set parcial_sum = apertura + desarrollo + cierre %}
-                    {% set ns.total = ns.total + parcial_sum %}
-                {% endif %}
-            {% endfor %}
+        <br><br>
 
-            <text class= 'partial-footer-total'>Total ponderado: {{ ns.total/5 }}% 
-            </text>        
-            <br>
+        <hr>
 
-            {% set ns = namespace(total=0) %}
 
-            {% for i in pg %}
-                {% if i['parcial'] == 'PARCIAL 2' %}
-                    {% set tapertura = i['apDur'] | int %}
-                    {% set tdesarrollo = i['deDur'] | int %}
 
-                    {% set tcierre = i['ciDur'] | int %}
-                    {% set parcial_sum = tapertura + tdesarrollo + tcierre %}
-                    {% set ns.total = ns.total + parcial_sum %}
-                {% endif %}
-            {% endfor %}
 
-            <text class='partial-footer-total'>Total tiempo: {{ ns.total/60 }} hrs</text>
-        </div>
-
-        <div>                     
-        {% set item = (pg | selectattr('parcial', 'equalto', 'PARCIAL 3') | first)          %}
-                {% if item %}
-                <h2 class="text-center mt-4 mb-2" style="padding-bottom:16px;color:rgb(100,100,100);">
-                    {{item['parcial']}}
-                </h2>
-                {% endif %}
-        </div>
-        <br>
-
-        <div>
-            {% for i in pg %}
-                {% if i['parcial'] == 'PARCIAL 3' %}
-                    {% include 'temasitem.html' %}
-                {% endif %}
-            {% endfor %}
-        </div>
-        <text class= 'partial-footer-total'>Parcial 3</text>
-        <div>
-            {% set ns = namespace(total=0) %}
-
-            {% for i in pg %}
-                {% if i['parcial'] == 'Parcial 3' %}
-                    {% set apertura = i['apPond'] | int %}
-                    {% set desarrollo = i['dePond'] | int %}
-
-                    {% set cierre = i['ciPond'] | int %}
-                    {% set parcial_sum = apertura + desarrollo + cierre %}
-                    {% set ns.total = ns.total + parcial_sum %}
-                {% endif %}
-            {% endfor %}
-
-            <text class='partial-footer-total'>Total ponderado: {{ ns.total/5 }}%</text>             
-            <br>
-
-            {% set ns = namespace(total=0) %}
-
-            {% for i in pg %}
-                {% if i['parcial'] == 'PARCIAL 3' %}
-                    {% set tapertura = i['apDur'] | int %}
-                    {% set tdesarrollo = i['deDur'] | int %}
-
-                    {% set tcierre = i['ciDur'] | int %}
-                    {% set parcial_sum = tapertura + tdesarrollo + tcierre %}
-                    {% set ns.total = ns.total + parcial_sum %}
-                {% endif %}
-            {% endfor %}
-
-            <text class='partial-footer-total'>Total tiempo: {{ ns.total/60 }}                         hrs</text>
-        </div>
         <!--BOTON CONTACTO -->
         <div style="text-align:center;">
-            <a class="btn btn-primary btn-lg"  type="button"                                       href="mailto:mc.renebec@gmail.com?                                        subject=Pregunta%20sobre%20el%20curso%20de%20Pensamiento%20Matemático%20I&body=Nombre%3A%20%3C%20escriba%20aqu%C3%AD%20su%20nombre%20completo%20%3E%0D%0ADatos%3A%20%3C%20escriba%20sus%20datos%20de%20Semestre%2C%20Grupo%20y%20Carrera%20%3E%0D%0APregunta%3A%20%3C%20escriba%20aqu%C3%AD%20su%20pregunta%20o%20comentario%20%3E%0D%0A">Contacto</a>
+            <a class="btn btn-primary btn-lg"  type="button"                                       href="mailto:ags.cbta205.depacadycomp@dgetaycm.sems.gob.mx?cc=ags.cbta205.subacad@dgetaycm.sems.gob.mx&bcc=ags.cbta205.direccion@dgetaycm.sems.gob.mx&subject=Consulta&body=Nombre%20y%20apellidos%3A%0APregunta%20o%20comentario%3A">Contacto</a>
         </div>
         </main>
         <footer>
