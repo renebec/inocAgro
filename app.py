@@ -13,7 +13,7 @@ from weasyprint import HTML, CSS
 import pymysql
 from werkzeug.utils import secure_filename
 
-from database import register_user, get_db_session, insert_actividad, insert_plan,  load_pg_from_db2, is_preregistered, load_all_pdfs, load_user_pdfs, load_user_info
+from database import register_user, get_db_session, insert_actividad, insert_plan, is_preregistered, load_all_pdfs, load_user_pdfs, load_user_info
 
 from sqlalchemy import text
 
