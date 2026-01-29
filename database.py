@@ -28,7 +28,7 @@ def handle_choice():
         choice = request.form.get('choice')  # 'value1' or 'value2' or None
     return render_template('register.html', choice=choice)
 
-
+"""
 def is_preregistered(numero_control):
     """
     Return True if numero_control is present in alumnos_preregistrados table.
@@ -46,7 +46,22 @@ def is_preregistered(numero_control):
         print(f"DB ERROR in is_preregistered: {e}")
         # maybe safe to reject if DB error
         return False
+"""
+def is_preregistered(numero_control):
+    session = get_db_session()
+    try:
+        print("🔎 Buscando NC:", repr(numero_control))
 
+        rows = session.execute(
+            text("SELECT numero_control FROM alumnos_preregistrados")
+        ).fetchall()
+
+        print("📋 NCs en DB:", [repr(r[0]) for r in rows])
+
+        return any(r[0].strip().upper() == numero_control for r in rows)
+
+    finally:
+        session.close()
 
 def load_pg_from_db():
     try:
