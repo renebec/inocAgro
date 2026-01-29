@@ -473,7 +473,7 @@ def handle_register_user(choice):
 
             # Format check: validate user type based on numero_control
             is_teacher_form = (choice == "D")
-            fourth_char = numero_control[2] if len(numero_control) >= 3 else None
+            fourth_char = numero_control[4] if len(numero_control) >= 3 else None
 
             if is_teacher_form and (not fourth_char or not fourth_char.isalpha()):
                 flash("El número de control No corresponde a un docente.", "danger")
