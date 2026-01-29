@@ -30,22 +30,24 @@ def handle_choice():
 
 
 def is_preregistered(numero_control):
- """
+    """
     Return True if numero_control is present in alumnos_preregistrados table.
- """
+    """
+    session = get_db_session()
     try:
-        session = get_db_session()
         result = session.execute(
-            text("SELECT 1 FROM alumnos_preregistrados WHERE numero_control = :nc"),
-            {"nc": numero_control}
+            text("""
+                SELECT 1
+                FROM alumnos_preregistrados
+                WHERE TRIM(UPPER(numero_control)) = :nc
+            """),
+            {"nc": numero_control.strip().upper()}
         )
-        row = result.first()
+        return result.first() is not None
+    finally:
         session.close()
-        return row is not None
-    except Exception as e:
-        print(f"DB ERROR in is_preregistered: {e}")
-        # maybe safe to reject if DB error
-        return False
+
+
 """
 def is_preregistered(numero_control):
     session = get_db_session()
