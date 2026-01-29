@@ -30,9 +30,9 @@ def handle_choice():
 
 """
 def is_preregistered(numero_control):
-    """
+ 
     Return True if numero_control is present in alumnos_preregistrados table.
-    """
+
     try:
         session = get_db_session()
         result = session.execute(
