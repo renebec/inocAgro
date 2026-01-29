@@ -28,11 +28,11 @@ def handle_choice():
         choice = request.form.get('choice')  # 'value1' or 'value2' or None
     return render_template('register.html', choice=choice)
 
-"""
-def is_preregistered(numero_control):
- 
-    Return True if numero_control is present in alumnos_preregistrados table.
 
+def is_preregistered(numero_control):
+ """
+    Return True if numero_control is present in alumnos_preregistrados table.
+ """
     try:
         session = get_db_session()
         result = session.execute(
@@ -62,6 +62,8 @@ def is_preregistered(numero_control):
 
     finally:
         session.close()
+"""
+
 
 def load_pg_from_db():
     try:
