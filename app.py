@@ -436,11 +436,12 @@ def register():
     if request.method == 'POST':
         user_type = request.form.get('user_type')
         
-        if user_type in ('A', 'D'):
-            return handle_register_user(choice=user_type)
-
-        flash("Seleccione un tipo de usuario válido.", "danger")
-
+        if user_type == 'A':
+            return redirect(url_for('register_alumno'))
+        elif user_type == 'D':
+            return redirect(url_for('register_docente'))
+        else:
+            flash("Seleccione un tipo de usuario válido.")
     return render_template('select_register_type.html')
 
 
@@ -461,7 +462,7 @@ def handle_register_user(choice):
     if request.method == "POST":
         try:
             # Get form data (use .get() to avoid KeyError if field is missing)
-            numero_control = request.form.get('numero_control', '').strip()
+            numero_control = request.form.get('numero_control', '').strip().upper()
             plantel = request.form.get('plantel', '').strip()
             apellido_paterno = request.form.get('apellido_paterno', '').strip()
             apellido_materno = request.form.get('apellido_materno', '').strip()
