@@ -435,12 +435,12 @@ def register():
 def register():
     if request.method == 'POST':
         user_type = request.form.get('user_type')
-        if user_type == 'A':
-            return redirect(url_for('register_alumno'))
-        elif user_type == 'D':
-            return redirect(url_for('register_docente'))
-        else:
-            flash("Seleccione un tipo de usuario válido.")
+        
+        if user_type in ('A', 'D'):
+            return handle_register_user(choice=user_type)
+
+        flash("Seleccione un tipo de usuario válido.", "danger")
+
     return render_template('select_register_type.html')
 
 
