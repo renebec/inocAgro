@@ -5,6 +5,7 @@ from datetime import datetime
 import pytz
 import pymysql
 
+"""
 db_connection_string = os.environ['DB_CONNECTION_STRING']
 engine = create_engine(db_connection_string,
       connect_args={
@@ -20,6 +21,34 @@ SessionLocal = sessionmaker(bind=engine)
 
 def get_db_session():
     return SessionLocal()
+"""
+
+
+db_connection_string = os.environ['DB_CONNECTION_STRING']
+
+engine = create_engine(
+    db_connection_string,
+    connect_args={
+        "ssl": {
+            "ssl_ca": "/etc/ssl/certs/ca-certificates.crt"
+        }
+    },
+    pool_pre_ping=True,   # Automatically checks if connection is alive
+    pool_recycle=280,     # Recycles connections older than 280 seconds
+    pool_size=5,          # Adjust depending on your app load
+    max_overflow=10       # Extra connections if pool_size is exceeded
+)
+
+# Single session factory for all your DB access
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db_session():
+    """Return a new session; use with 'with' statement for safety."""
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 def handle_choice():
