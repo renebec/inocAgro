@@ -163,7 +163,7 @@ def handle_register_user(choice):
             existing = db_session.execute(
                 text("SELECT 1 FROM users2 WHERE username = :username"),
                 {"username": username}
-            ).first() is not None
+            ).scalar() is not None
 
             if existing:
                 flash("Ese nombre de usuario ya está registrado. Por favor, elige otro.", "danger")
