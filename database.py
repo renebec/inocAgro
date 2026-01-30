@@ -6,7 +6,7 @@ from datetime import datetime
 import pytz
 import pymysql
 
-"""
+
 db_connection_string = os.environ['DB_CONNECTION_STRING']
 engine = create_engine(db_connection_string,
       connect_args={
@@ -22,22 +22,8 @@ SessionLocal = sessionmaker(bind=engine)
 
 def get_db_session():
     return SessionLocal()
-"""
 
 
-from sqlalchemy.pool import NullPool
-
-engine = create_engine(
-    db_connection_string,
-    connect_args={
-        "ssl": {"ssl_ca": "/etc/ssl/certs/ca-certificates.crt"},
-        "connect_timeout": 10,
-    },
-    poolclass=NullPool,   # 🔥 CLAVE
-)
-
-# Single session factory for all your DB access
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db_session():
     return SessionLocal()
