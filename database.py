@@ -42,7 +42,7 @@ def handle_choice():
     return render_template('register.html', choice=choice)
 
 
-"""
+""" ESTO ES UN COMENTARIO
 def is_preregistered(numero_control):
     session = get_db_session()
     try:
