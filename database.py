@@ -35,7 +35,7 @@ def handle_choice():
     return render_template('register.html', choice=choice)
 
 
-
+"""
 def is_preregistered(numero_control):
     session = get_db_session()
     try:
@@ -51,6 +51,39 @@ def is_preregistered(numero_control):
 
     finally:
         session.close()
+"""
+
+def is_preregistered(numero_control):
+    session = get_db_session()
+    try:
+        print("🔎 Buscando NC:", repr(numero_control))
+
+        rows = session.execute(
+            text("SELECT numero_control FROM alumnos_preregistrados")
+        ).fetchall()
+
+        return any(
+            r[0].strip().upper() == numero_control.strip().upper()
+            for r in rows
+        )
+
+    except OperationalError as e:
+        print("⚠️ DB reconnection issue, retrying...", e)
+        session.rollback()
+
+        # 🔁 reintento simple
+        rows = session.execute(
+            text("SELECT numero_control FROM alumnos_preregistrados")
+        ).fetchall()
+
+        return any(
+            r[0].strip().upper() == numero_control.strip().upper()
+            for r in rows
+        )
+
+    finally:
+        session.close()
+
 
 
 
