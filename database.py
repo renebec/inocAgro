@@ -11,9 +11,9 @@ import pymysql
 db_connection_string = os.environ['DB_CONNECTION_STRING']
 engine = create_engine(db_connection_string,
                        pool_pre_ping=True,
-                       pool_recycle=900,
-                       pool_size=3,
-                       max_overflow=2,
+                       pool_recycle=280,
+                       pool_size=1,
+                       max_overflow=0,
       connect_args={
             "connect_timeout": 10,
             "ssl": { 
