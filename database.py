@@ -24,11 +24,6 @@ def get_db_session():
     return SessionLocal()
 
 
-
-def get_db_session():
-    return SessionLocal()
-
-
 def handle_choice():
     choice = None
     if request.method == 'POST':
