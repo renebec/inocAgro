@@ -156,9 +156,8 @@ def handle_register_user(choice):
             created_at = datetime.now(pytz.timezone("America/Mexico_City"))
 
             # Check if username exists
-            existing = db_session.execute
-            (
-                "SELECT 1 FROM users2 WHERE username = :username",
+            existing = db_session.execute(
+                text("SELECT 1 FROM users2 WHERE username = :username"),
                 {"username": username}
             ).first()
             if existing:
