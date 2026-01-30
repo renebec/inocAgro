@@ -25,19 +25,15 @@ def get_db_session():
 """
 
 
-db_connection_string = os.environ['DB_CONNECTION_STRING']
+from sqlalchemy.pool import NullPool
 
 engine = create_engine(
     db_connection_string,
     connect_args={
-        "ssl": {
-            "ssl_ca": "/etc/ssl/certs/ca-certificates.crt"
-        }
+        "ssl": {"ssl_ca": "/etc/ssl/certs/ca-certificates.crt"},
+        "connect_timeout": 10,
     },
-    pool_pre_ping=True,   # Automatically checks if connection is alive
-    pool_recycle=280,     # Recycles connections older than 280 seconds
-    pool_size=5,          # Adjust depending on your app load
-    max_overflow=10       # Extra connections if pool_size is exceeded
+    poolclass=NullPool,   # 🔥 CLAVE
 )
 
 # Single session factory for all your DB access
