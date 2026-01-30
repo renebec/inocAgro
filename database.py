@@ -9,6 +9,8 @@ import pymysql
 
 db_connection_string = os.environ['DB_CONNECTION_STRING']
 engine = create_engine(db_connection_string,
+                       pool_pre_ping=True,
+                       pool_recycle=1800,
       connect_args={
             "ssl": { 
               "ssl_ca": "/etc/ssl/certs/ca-certificates.crt"
