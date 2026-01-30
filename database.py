@@ -1,5 +1,6 @@
 import os
 from sqlalchemy import create_engine, text
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 import pytz
@@ -54,20 +55,40 @@ def handle_choice():
 
 
 def is_preregistered(numero_control):
-    """
-    Return True if numero_control is present in alumnos_preregistrados table.
-    """
-    session = get_db_session()
+    nc = numero_control.strip().upper()
+
     try:
+        session = get_db_session()
         result = session.execute(
             text("""
                 SELECT 1
                 FROM alumnos_preregistrados
-                WHERE TRIM(UPPER(numero_control)) = :nc
+                WHERE BINARY TRIM(UPPER(numero_control)) = :nc
+                LIMIT 1
             """),
-            {"nc": numero_control.strip().upper()}
+            {"nc": nc}
         )
         return result.first() is not None
+
+    except OperationalError as e:
+        print("⚠️ DB reconnection issue, retrying...", e)
+        session.rollback()
+
+        # 🔁 REINTENTO UNA VEZ (PlanetScale friendly)
+        session.close()
+        session = get_db_session()
+
+        result = session.execute(
+            text("""
+                SELECT 1
+                FROM alumnos_preregistrados
+                WHERE BINARY TRIM(UPPER(numero_control)) = :nc
+                LIMIT 1
+            """),
+            {"nc": nc}
+        )
+        return result.first() is not None
+
     finally:
         session.close()
 

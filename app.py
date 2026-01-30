@@ -17,6 +17,7 @@ from database import register_user, get_db_session, insert_actividad, insert_pla
 
 from sqlalchemy import text
 
+
 created_at = datetime.now()
 
 import time
@@ -462,7 +463,7 @@ def handle_register_user(choice):
     if request.method == "POST":
         try:
             # Get form data (use .get() to avoid KeyError if field is missing)
-            numero_control = request.form.get('numero_control', '').strip().upper()
+            numero_control = request.form.get('numero_control', '').strip()
             plantel = request.form.get('plantel', '').strip()
             apellido_paterno = request.form.get('apellido_paterno', '').strip()
             apellido_materno = request.form.get('apellido_materno', '').strip()
