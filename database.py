@@ -30,47 +30,7 @@ def handle_choice():
         choice = request.form.get('choice')  # 'value1' or 'value2' or None
     return render_template('register.html', choice=choice)
 
-"""
-def is_preregistered(numero_control):
-    nc = numero_control.strip().upper()
 
-    try:
-        session = get_db_session()
-        result = session.execute(
-            text("""
-                SELECT 1
-                FROM alumnos_preregistrados
-                WHERE BINARY TRIM(UPPER(numero_control)) = :nc
-                LIMIT 1
-            """),
-            {"nc": nc}
-        )
-        return result.first() is not None
-
-    except OperationalError as e:
-        print("⚠️ DB reconnection issue, retrying...", e)
-        session.rollback()
-
-        # 🔁 REINTENTO UNA VEZ (PlanetScale friendly)
-        session.close()
-        session = get_db_session()
-
-        result = session.execute(
-            text("""
-                SELECT 1
-                FROM alumnos_preregistrados
-                WHERE BINARY TRIM(UPPER(numero_control)) = :nc
-                LIMIT 1
-            """),
-            {"nc": nc}
-        )
-        return result.first() is not None
-
-    finally:
-        session.close()
-
-
-"""
 
 def is_preregistered(numero_control):
     session = get_db_session()
