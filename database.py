@@ -7,6 +7,7 @@ import pytz
 import pymysql
 
 
+
 db_connection_string = os.environ['DB_CONNECTION_STRING']
 engine = create_engine(db_connection_string,
                        pool_pre_ping=True,
@@ -27,6 +28,10 @@ SessionLocal = sessionmaker(bind=engine)
 
 def get_db_session():
     return SessionLocal()
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
 
 
 def handle_choice():
