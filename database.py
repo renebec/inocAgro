@@ -71,7 +71,7 @@ def is_preregistered(numero_control):
                 LIMIT 1
             """),
             {"nc": numero_control.strip().upper()}
-        ).scalar_one_or_none() is not None
+        ).first() is not None
     finally:
         session.close()
 
