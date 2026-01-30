@@ -124,6 +124,7 @@ def handle_register_user(choice):
     if request.method == "POST":
         db_session = None
         try:
+            # Recoger datos del formulario
             numero_control = request.form.get('numero_control', '').strip()
             plantel = request.form.get('plantel', '').strip()
             apellido_paterno = request.form.get('apellido_paterno', '').strip()
@@ -132,22 +133,25 @@ def handle_register_user(choice):
             username = request.form.get('username', '').strip()
             password_raw = request.form.get('password', '')
 
+            # Validar longitud de contraseña
             if len(password_raw) < 8:
                 flash("La contraseña debe tener al menos 8 caracteres.", "danger")
                 return render_template(template)
 
             password = bcrypt.generate_password_hash(password_raw).decode('utf-8')
 
-            # Validate user type vs numero_control
+            # Validar tipo de usuario vs numero_control
             is_teacher_form = (choice == "D")
             fourth_char = numero_control[3] if len(numero_control) >= 4 else None
+
             if is_teacher_form and (not fourth_char or not fourth_char.isalpha()):
-                flash("El número de control No corresponde a un docente.", "danger")
+                flash("El número de control no corresponde a un docente.", "danger")
                 return render_template(template)
             if not is_teacher_form and fourth_char and fourth_char.isalpha():
                 flash("El número de control corresponde a un docente. Selecciona 'Docente' para registrarte.", "danger")
                 return render_template(template)
 
+            # Verificar preregistro
             if not is_preregistered(numero_control):
                 flash("No se reconoce ese número de control; imposible registrar.", "danger")
                 return render_template(template)
@@ -155,15 +159,17 @@ def handle_register_user(choice):
             db_session = get_db_session()
             created_at = datetime.now(pytz.timezone("America/Mexico_City"))
 
-            # Check if username exists
+            # Revisar si username ya existe
             existing = db_session.execute(
                 text("SELECT 1 FROM users2 WHERE username = :username"),
                 {"username": username}
-            ).first()
+            ).first() is not None
+
             if existing:
                 flash("Ese nombre de usuario ya está registrado. Por favor, elige otro.", "danger")
                 return render_template(template)
 
+            # Registrar usuario
             success = register_user(
                 db_session,
                 numero_control,
@@ -175,11 +181,13 @@ def handle_register_user(choice):
                 password,
                 created_at
             )
+
             if success:
                 flash(f"Registro exitoso para {nombres}!", "success")
                 return redirect(url_for('login'))
             else:
                 flash("Error al registrar usuario.", "danger")
+
         except Exception as e:
             print("❌ Error en registro:", e)
             flash("Hubo un problema al registrarte. Inténtelo más tarde.", "danger")
