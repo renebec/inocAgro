@@ -30,7 +30,7 @@ def handle_choice():
         choice = request.form.get('choice')  # 'value1' or 'value2' or None
     return render_template('register.html', choice=choice)
 
-
+"""
 def is_preregistered(numero_control):
     nc = numero_control.strip().upper()
 
@@ -71,6 +71,7 @@ def is_preregistered(numero_control):
 
 
 """
+
 def is_preregistered(numero_control):
     session = get_db_session()
     try:
@@ -86,7 +87,7 @@ def is_preregistered(numero_control):
 
     finally:
         session.close()
-"""
+
 
 
 def load_pg_from_db():
