@@ -160,7 +160,7 @@ def handle_register_user(choice):
             (
                 "SELECT 1 FROM users2 WHERE username = :username",
                 {"username": username}
-            ).first()
+            ).scalar_one_or_none()
             if existing:
                 flash("Ese nombre de usuario ya está registrado. Por favor, elige otro.", "danger")
                 return render_template(template)
