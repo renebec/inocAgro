@@ -4,6 +4,7 @@ import pytz
 from flask import Flask, render_template, request, redirect, url_for, flash, session as flask_session
 from flask_bcrypt import Bcrypt
 from database import register_user, get_db_session, is_preregistered, get_user_from_database
+from sqlalchemy import text
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
