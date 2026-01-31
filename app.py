@@ -139,3 +139,49 @@ def handle_register_user(choice):
             fourth_char = numero_control[3] if len(numero_control) >= 4 else None
             if is_teacher_form and (not fourth_char or not fourth_char.isalpha()):
                 flash("El número de control no corresponde a un docente.", "danger")
+                return render_template(template)
+            if not is_teacher_form and fourth_char and fourth_char.isalpha():
+                flash("El número de control corresponde a un docente. Selecciona 'Docente' para registrarte.", "danger")
+                return render_template(template)
+
+            # Preregistro
+            if not is_preregistered(numero_control):
+                flash("No se reconoce ese número de control; imposible registrar.", "danger")
+                return render_template(template)
+        
+            db_session = get_db_session()
+        
+            # Revisar unicidad
+            exists = db_session.execute(
+                text("SELECT 1 FROM users2 WHERE username = :username OR numero_control = :numero_control"),
+                {"username": username, "numero_control": numero_control}
+            ).scalar() is not None
+            if exists:
+                flash("Ese usuario o número de control ya está registrado.", "danger")
+                return render_template(template)
+        
+            # Registrar usuario
+            success = register_user(
+                db_session,
+                numero_control,
+                plantel,
+                apellido_paterno,
+                apellido_materno,
+                nombres,
+                username,
+                password_raw
+            )
+        
+            if success:
+                flash(f"Registro exitoso para {nombres}!", "success")
+                return redirect(url_for('login'))
+            else:
+                flash("Error al registrar usuario.", "danger")
+        
+        except Exception as e:
+            print("❌ Error en registro:", e)
+            flash("Hubo un problema al registrarte. Inténtelo más tarde.", "danger")
+        
+        finally:
+            if db_session:
+                db_session.close()
