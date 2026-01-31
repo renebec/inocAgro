@@ -3,23 +3,24 @@ from datetime import datetime, timedelta
 import pytz
 from flask import Flask, render_template, request, redirect, url_for, flash, session as flask_session
 from flask_bcrypt import Bcrypt
+from sqlalchemy import text
 from database import register_user, get_db_session, is_preregistered, get_user_from_database
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-app.secret_key = "dev-secret"  # Replace with os.environ.get("SECRET_KEY") in production
+app.secret_key = "dev-secret"  # Cambiar por os.environ.get("SECRET_KEY") en producción
 app.permanent_session_lifetime = timedelta(minutes=60)
 
 
 # -----------------------------
-# Session timeout check
+# Session timeout
 # -----------------------------
 def check_session_timeout():
     last = flask_session.get('last_activity')
     if not last:
         return False
     now = time.time()
-    timeout_seconds = 60 * 60  # 60 minutes
+    timeout_seconds = 60 * 60
     try:
         last = float(last)
     except:
@@ -33,7 +34,7 @@ def check_session_timeout():
 
 
 # -----------------------------
-# Home page
+# Home
 # -----------------------------
 @app.route("/")
 def home():
@@ -109,13 +110,10 @@ def register():
 
 
 # -----------------------------
-# Handle registration (shared)
+# Handle registration
 # -----------------------------
 def handle_register_user(choice):
-    template_map = {
-        "A": "register_alumno.html",
-        "D": "register_docente.html"
-    }
+    template_map = {"A": "register_alumno.html", "D": "register_docente.html"}
     template = template_map.get(choice)
     if not template:
         flash("Tipo de usuario no válido.", "danger")
@@ -136,80 +134,8 @@ def handle_register_user(choice):
                 flash("La contraseña debe tener al menos 8 caracteres.", "danger")
                 return render_template(template)
 
-            # Validación tipo de usuario vs numero_control
+            # Validación tipo de usuario
             is_teacher_form = (choice == "D")
             fourth_char = numero_control[3] if len(numero_control) >= 4 else None
             if is_teacher_form and (not fourth_char or not fourth_char.isalpha()):
                 flash("El número de control no corresponde a un docente.", "danger")
-                return render_template(template)
-            if not is_teacher_form and fourth_char and fourth_char.isalpha():
-                flash("El número de control corresponde a un docente. Selecciona 'Docente' para registrarte.", "danger")
-                return render_template(template)
-
-            # Preregistro
-            if not is_preregistered(numero_control):
-                flash("No se reconoce ese número de control; imposible registrar.", "danger")
-                return render_template(template)
-
-            db_session = get_db_session()
-
-            # Revisar unicidad
-            exists = db_session.execute(
-                text("SELECT 1 FROM users2 WHERE username = :username OR numero_control = :numero_control"),
-                {"username": username, "numero_control": numero_control}
-            ).scalar() is not None
-            if exists:
-                flash("Ese usuario o número de control ya está registrado.", "danger")
-                return render_template(template)
-
-            # Registrar usuario
-            success = register_user(
-                db_session,
-                numero_control,
-                plantel,
-                apellido_paterno,
-                apellido_materno,
-                nombres,
-                username,
-                password_raw
-            )
-
-            if success:
-                flash(f"Registro exitoso para {nombres}!", "success")
-                return redirect(url_for('login'))
-            else:
-                flash("Error al registrar usuario.", "danger")
-
-        except Exception as e:
-            print("❌ Error en registro:", e)
-            flash("Hubo un problema al registrarte. Inténtelo más tarde.", "danger")
-        finally:
-            if db_session:
-                db_session.close()
-
-    return render_template(template)
-
-
-
-@app.route("/register/alumno", methods=["GET", "POST"])
-def register_alumno():
-    return handle_register_user("A")
-
-
-@app.route("/register/docente", methods=["GET", "POST"])
-def register_docente():
-    return handle_register_user("D")
-
-
-# -----------------------------
-# Logout
-# -----------------------------
-@app.route('/logout')
-def logout():
-    flask_session.clear()
-    flash("Has cerrado sesión correctamente.", "success")
-    return redirect(url_for('login'))
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
