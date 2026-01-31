@@ -98,15 +98,24 @@ def login():
 # -----------------------------
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    # Determinar tipo de usuario
+    user_type = None
     if request.method == 'POST':
+        # Tomamos del formulario si viene por POST
         user_type = request.form.get('user_type')
-        if user_type == 'A':
-            return redirect(url_for('register_alumno'))
-        elif user_type == 'D':
-            return redirect(url_for('register_docente'))
-        else:
-            flash("Seleccione un tipo de usuario válido.")
+    elif request.method == 'GET':
+        # Tomamos de query string si viene por GET
+        user_type = request.args.get('choice')
+
+    # Redirigir según tipo
+    if user_type == 'A':
+        return redirect(url_for('register_alumno'))
+    elif user_type == 'D':
+        return redirect(url_for('register_docente'))
+
+    # Si no se sabe el tipo, mostramos la selección
     return render_template('select_register_type.html')
+
 
 
 # -----------------------------
