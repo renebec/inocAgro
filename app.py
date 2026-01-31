@@ -115,65 +115,42 @@ def register():
 @app.route('/register/docente', methods=['GET', 'POST'])
 def register_docente():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        password2 = request.form.get('password2')  # opcional, para validar confirmación
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
 
-        # Validar que las contraseñas coincidan
-        if password != password2:
-            flash("Las contraseñas no coinciden")
+        if not username or not password:
+            flash('Completa todos los campos.', 'danger')
             return redirect(url_for('register_docente'))
 
-        # Validar que el username no exista
-        existing_user = User.query.filter_by(username=username).first()
+        # Revisar si ya existe usuario
+        existing_user = get_user_from_database(username)
         if existing_user:
-            flash("El usuario ya existe")
+            flash('El usuario ya existe.', 'warning')
             return redirect(url_for('register_docente'))
 
-        # Crear usuario y guardar
-        new_user = User(username=username, password=generate_password_hash(password))
-        db.session.add(new_user)
-        db.session.commit()
+        # Crear hash de contraseña
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
-        flash("Usuario registrado con éxito")
-        return redirect(url_for('login'))
+        # Guardar usuario en DB
+        try:
+            save_user_to_database({
+                'username': username,
+                'password': hashed_password,
+                'numero_control': request.form.get('numero_control', ''),
+                'is_master': int(request.form.get('is_master', 0))
+            })
+            flash('Registro exitoso. Ahora puedes iniciar sesión.', 'success')
+            return redirect(url_for('login'))
+        except Exception as e:
+            print("❌ Error en registro:", e)
+            flash('Error interno. Intenta más tarde.', 'danger')
 
     return render_template('register_docente.html')
 
 
+
 # REGISTRO ALUMNO
-@app.route('/register/alumno', methods=['GET', 'POST'])
-def register_alumno():
-    if request.method == 'POST':
-        nombre = request.form.get('nombre', '').strip()
-        email = request.form.get('email', '').strip()
-        password = request.form.get('password', '').strip()
-        password2 = request.form.get('password2', '').strip()
 
-        errors = []
-        if not nombre or not email or not password or not password2:
-            errors.append("Todos los campos son obligatorios.")
-        if password != password2:
-            errors.append("Las contraseñas no coinciden.")
-        if len(password) < 6:
-            errors.append("La contraseña debe tener al menos 6 caracteres.")
-
-        existing_user = User.query.filter_by(email=email).first()
-        if existing_user:
-            errors.append("Ya existe un usuario con este email.")
-
-        if errors:
-            return render_template('register_alumno.html', errors=errors,
-                                   nombre=nombre, email=email)
-
-        hashed_pw = generate_password_hash(password)
-        nuevo_alumno = User(nombre=nombre, email=email, password=hashed_pw, role='alumno')
-        db.session.add(nuevo_alumno)
-        db.session.commit()
-        flash("Registro exitoso. Ya puedes iniciar sesión.", "success")
-        return redirect(url_for('login'))
-
-    return render_template('register_alumno.html')
 
 
 # -----------------------------
