@@ -27,7 +27,7 @@
     <div class="container mt-5">
 
         <h2>Registro</h2>
-        <form method="POST">
+        <form method="POST" action="{{ url_for('register_docente') }}">
 
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
