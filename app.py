@@ -115,44 +115,31 @@ def register():
 @app.route('/register/docente', methods=['GET', 'POST'])
 def register_docente():
     if request.method == 'POST':
-        # Obtener datos del formulario
-        nombre = request.form.get('nombre', '').strip()
-        email = request.form.get('email', '').strip()
-        password = request.form.get('password', '').strip()
-        password2 = request.form.get('password2', '').strip()
+        username = request.form.get('username')
+        password = request.form.get('password')
+        password2 = request.form.get('password2')  # opcional, para validar confirmación
 
-        # VALIDACIÓN BÁSICA
-        errors = []
-        if not nombre:
-            errors.append("El nombre es obligatorio.")
-        if not email:
-            errors.append("El email es obligatorio.")
-        if not password or not password2:
-            errors.append("La contraseña es obligatoria.")
+        # Validar que las contraseñas coincidan
         if password != password2:
-            errors.append("Las contraseñas no coinciden.")
-        if len(password) < 6:
-            errors.append("La contraseña debe tener al menos 6 caracteres.")
+            flash("Las contraseñas no coinciden")
+            return redirect(url_for('register_docente'))
 
-        # Validar si el email ya existe
-        existing_user = User.query.filter_by(email=email).first()
+        # Validar que el username no exista
+        existing_user = User.query.filter_by(username=username).first()
         if existing_user:
-            errors.append("Ya existe un usuario con este email.")
+            flash("El usuario ya existe")
+            return redirect(url_for('register_docente'))
 
-        if errors:
-            return render_template('register_docente.html', errors=errors,
-                                   nombre=nombre, email=email)
-
-        # Crear usuario y guardar en DB
-        hashed_pw = generate_password_hash(password)
-        nuevo_docente = User(nombre=nombre, email=email, password=hashed_pw, role='docente')
-        db.session.add(nuevo_docente)
+        # Crear usuario y guardar
+        new_user = User(username=username, password=generate_password_hash(password))
+        db.session.add(new_user)
         db.session.commit()
-        flash("Registro exitoso. Ya puedes iniciar sesión.", "success")
+
+        flash("Usuario registrado con éxito")
         return redirect(url_for('login'))
 
-    # GET
     return render_template('register_docente.html')
+
 
 # REGISTRO ALUMNO
 @app.route('/register/alumno', methods=['GET', 'POST'])
