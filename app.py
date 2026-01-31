@@ -34,23 +34,36 @@ def check_session_timeout():
 # -----------------------------
 # Home page
 # -----------------------------
+
+
 @app.route("/")
 def home():
     if not check_session_timeout():
         flash("Su sesión ha expirado. Por favor, inicie sesión nuevamente.", "danger")
         return redirect(url_for("login"))
+
     username = flask_session.get("username")
     numero_control = flask_session.get("numero_control")
     is_master = flask_session.get("is_master", False)
+
     if not username or not numero_control:
         flash("Debe iniciar sesión.", "danger")
         return redirect(url_for("login"))
+
+    # 🔹 Obtener info del usuario
+    user_info = None
+    user = get_user_from_database(username)
+    if user:
+        user_info = user.get("info")  # Aquí guardamos el texto del campo "info"
+
     return render_template(
         "home.html",
         username=username,
         numero_control=numero_control,
-        is_master=is_master
+        is_master=is_master,
+        info=user_info   # 🔹 Pasamos la variable al template
     )
+
 
 # -----------------------------
 # Login
