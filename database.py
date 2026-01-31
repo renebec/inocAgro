@@ -68,6 +68,8 @@ def is_preregistered(numero_control):
     finally:
         session.close()
 
+
+
 def load_pg_from_db():
     try:
         with engine.connect() as conn:

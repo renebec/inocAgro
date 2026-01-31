@@ -150,7 +150,7 @@ def handle_register_user(choice):
 
             # Check if username exists
             existing = db_session.execute(
-                test("SELECT 1 FROM users2 WHERE username = :username"),
+                text("SELECT * FROM users2 WHERE username = :username"),
                 {"username": username}
             ).fetchone()
             if existing:
