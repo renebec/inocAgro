@@ -105,6 +105,7 @@ def register():
 # Handle registration (shared)
 # -----------------------------
 def handle_register_user(choice):
+    print("🟢 HANDLE REGISTER DOCENTE EJECUTADO")
     template_map = {
         "A": "register_alumno.html",
         "D": "register_docente.html"
