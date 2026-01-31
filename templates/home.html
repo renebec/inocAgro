@@ -147,7 +147,18 @@
 
     <main class="container col-12 col-md-9">
         <p style="text-align:right;color:rgb(150,150,150);">@ by HRBC.</p>
+        <!-- Mensajes flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
 
+        
         {% if info %}
           <div class="alert alert-info mt-3">
             {{ info }}
