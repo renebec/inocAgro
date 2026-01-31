@@ -116,7 +116,16 @@ def register():
     # Si no se sabe el tipo, mostramos la selección
     return render_template('select_register_type.html')
 
+@app.route('/register/docente', methods=['GET', 'POST'])
+def register_docente():
+    # lógica de registro de docentes
+    return render_template("register_docente.html")
 
+
+@app.route('/register/alumno', methods=['GET', 'POST'])
+def register_alumno():
+    # lógica de registro de alumnos
+    return render_template("register_alumno.html")
 
 # -----------------------------
 # Handle registration
