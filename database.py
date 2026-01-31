@@ -1,7 +1,7 @@
 import os
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from datetime import datetime
 import pytz
 import pymysql
@@ -12,8 +12,8 @@ engine = create_engine(
     db_connection_string,
     pool_pre_ping=True,
     pool_recycle=280,
-    pool_size=1,
-    max_overflow=0,
+    pool_size=5,      # aumenta a al menos el número de workers
+    max_overflow=5,   # permite conexiones extra si hay picos
     connect_args={
         "connect_timeout": 10,
         "ssl": {
@@ -22,11 +22,11 @@ engine = create_engine(
     }
 )
 
-Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 SessionLocal = sessionmaker(bind=engine)
 
 def get_db_session():
-    return SessionLocal()
+    return Session()  # usa el scoped_session directamente
 
 """
 if __name__ == "__main__":
