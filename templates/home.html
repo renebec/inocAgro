@@ -148,22 +148,12 @@
     <main class="container col-12 col-md-9">
         <p style="text-align:right;color:rgb(150,150,150);">@ by HRBC.</p>
         <!-- Mensajes flash -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}" role="alert">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
 
-        
+
         {% if info %}
-          <div class="alert alert-info mt-3">
-            {{ info }}
-          </div>
+          {{ info }}
         {% endif %}
+
 <!--        <a href="https://dgetaycm.sep.gob.mx/Con%C3%B3cenos/2" target="_blank">Acerca de DGETAyCM</a>&#128072;<br>
         <a href="https://renebec.github.io/mapdgetaycm/" target="_blank">Mapa de planteles</a>&#128072;
 
