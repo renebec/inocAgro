@@ -5,28 +5,22 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 import pytz
 import pymysql
-from flask_bcrypt import Bcrypt
 
-# -----------------------------
-# Inicialización Bcrypt
-# -----------------------------
-bcrypt = Bcrypt()
-
-# -----------------------------
-# Configuración de la DB
-# -----------------------------
 db_connection_string = os.environ['DB_CONNECTION_STRING']
-engine = create_engine(db_connection_string,
-                       pool_pre_ping=True,
-                       pool_recycle=280,
-                       pool_size=1,
-                       max_overflow=0,
-                       connect_args={
-                           "connect_timeout": 10,
-                           "ssl": { 
-                               "ssl_ca": "/etc/ssl/certs/ca-certificates.crt"
-                           }
-                       })
+
+engine = create_engine(
+    db_connection_string,
+    pool_pre_ping=True,
+    pool_recycle=280,
+    pool_size=1,
+    max_overflow=0,
+    connect_args={
+        "connect_timeout": 10,
+        "ssl": {
+            "ssl_ca": "/etc/ssl/certs/ca-certificates.crt"
+        }
+    }
+)
 
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 SessionLocal = sessionmaker(bind=engine)
@@ -34,28 +28,46 @@ SessionLocal = sessionmaker(bind=engine)
 def get_db_session():
     return SessionLocal()
 
-# -----------------------------
-# Validación de preregistro
-# -----------------------------
+"""
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
+"""
+
+def handle_choice():
+    choice = None
+    if request.method == 'POST':
+        choice = request.form.get('choice')  # 'value1' or 'value2' or None
+    return render_template('register.html', choice=choice)
+
+"""
+ESTO ES UN COMENTARIO
+def is_preregistered(numero_control):
+    session = get_db_session()
+    try:
+        print("🔎 Buscando NC:", repr(numero_control))
+        rows = session.execute(
+            text("SELECT numero_control FROM alumnos_preregistrados")
+        ).fetchall()
+        print("📋 NCs en DB:", [repr(r[0]) for r in rows])
+        return any(r[0].strip().upper() == numero_control for r in rows)
+    finally:
+        session.close()
+"""
+
 def is_preregistered(numero_control):
     session = get_db_session()
     try:
         return session.execute(
             text("""
-                SELECT 1
-                FROM alumnos_preregistrados
-                WHERE UPPER(TRIM(numero_control)) = :nc
-                LIMIT 1
+                SELECT 1 FROM alumnos_preregistrados 
+                WHERE UPPER(TRIM(numero_control)) = :nc LIMIT 1
             """),
             {"nc": numero_control.strip().upper()}
         ).first() is not None
     finally:
         session.close()
 
-
-# -----------------------------
-# Funciones existentes intactas
-# -----------------------------
 def load_pg_from_db():
     try:
         with engine.connect() as conn:
@@ -66,17 +78,15 @@ def load_pg_from_db():
         print(f"DB ERROR: {e}")
         return None
 
+# Insert a new actividad record
 def insert_actividad(session, numero_control, plantel, apellido_paterno, apellido_materno, nombres, info, pdf_url, created_at):
     created_at = datetime.now(pytz.timezone("America/Mexico_City"))
     try:
         query = text("""
             INSERT INTO actividades (
-                numero_control, plantel, apellido_paterno, apellido_materno,
-                nombres, info, pdf_url, created_at
-            )
-            VALUES (
-                :numero_control, :plantel, :apellido_paterno, :apellido_materno,
-                :nombres, :info, :pdf_url, :created_at
+                numero_control, plantel, apellido_paterno, apellido_materno, nombres, info, pdf_url, created_at
+            ) VALUES (
+                :numero_control, :plantel, :apellido_paterno, :apellido_materno, :nombres, :info, :pdf_url, :created_at
             )
         """)
         session.execute(query, {
@@ -105,7 +115,8 @@ def load_all_pdfs(session_db):
         ORDER BY created_at DESC, numero_control DESC
     """)
     result = session_db.execute(query).mappings().all()
-    return result
+    pdfs = result
+    return pdfs
 
 def load_user_pdfs(session_db, numero_control):
     query = text("""
@@ -115,14 +126,12 @@ def load_user_pdfs(session_db, numero_control):
         ORDER BY created_at DESC, numero_control DESC
     """)
     result = session_db.execute(query, {"numero_control": numero_control}).mappings().all()
-    return result
+    pdfs = result
+    return pdfs
 
 def load_user_info(session_db, numero_control):
     query = text("""
-        SELECT info
-        FROM users2
-        WHERE numero_control = :numero_control
-        LIMIT 1
+        SELECT info FROM users2 WHERE numero_control = :numero_control LIMIT 1
     """)
     row = session_db.execute(query, {"numero_control": numero_control}).mappings().first()
     return row["info"] if row else None
@@ -132,9 +141,12 @@ def insert_plan(session, plan, docenteID, cve, created_at=None, pdf_url=None, pa
         created_at = datetime.now(pytz.timezone("America/Mexico_City"))
 
     params = {
-        "plan": plan,"plantel": plantel, 
-        "docenteID": docenteID, "cve": cve,
-        "created_at": created_at, "pdf_url": pdf_url
+        "plan": plan,
+        "plantel": plantel,
+        "docenteID": docenteID,
+        "cve": cve,
+        "created_at": created_at,
+        "pdf_url": pdf_url
     }
 
     try:
@@ -149,37 +161,27 @@ def insert_plan(session, plan, docenteID, cve, created_at=None, pdf_url=None, pa
         session.commit()
         print("✅ Registro insertado correctamente")
         return result.lastrowid
-
     except pymysql.err.IntegrityError as e:
         if "1062" in str(e):
             print("⚠️ Plan duplicado detectado. Actualizando...")
-
             update_query = text("""
-                UPDATE mat1 SET
-                    plan = :plan,
-                    docenteID = :docenteID, 
-                    created_at = :created_at, pdf_url = :pdf_url, parPond = : parPond
+                UPDATE mat1
+                SET plan = :plan, docenteID = :docenteID, created_at = :created_at, pdf_url = :pdf_url, parPond = : parPond
                 WHERE plan = :plan
             """)
-
             session.execute(update_query, params)
             session.commit()
             print("✅ Plan actualizado correctamente")
             return params.get("plan")
         raise
-
     except Exception as e:
         print(f"❌ DB ERROR al cargar la planeación: {e}")
         session.rollback()
         return False
-
     finally:
         session.close()
 
-
-# -----------------------------
-# Login: obtener usuario
-# -----------------------------
+# Get user data by username (login verification)
 def get_user_from_database(username):
     try:
         session = get_db_session()
@@ -194,49 +196,35 @@ def get_user_from_database(username):
         print(f"DB ERROR: {e}")
         return None
 
+# Register a new user in the database
+def register_user(session, numero_control, plantel, apellido_paterno, apellido_materno, nombres, username, password, created_at):
+    existing_user = get_user_from_database(username)
+    if existing_user:
+        return False
 
-# -----------------------------
-# Registro de usuario mejorado
-# -----------------------------
-def register_user(session, numero_control, plantel, apellido_paterno,
-      apellido_materno, nombres, username, password_raw):
-    """
-    Inserta un usuario en la DB con hash de contraseña.
-    Retorna True si se inserta, False si falla (duplicado o error DB)
-    """
+    password = password
+
     try:
-        password_hash = bcrypt.generate_password_hash(password_raw).decode('utf-8')
-
-        session.execute(
-            text("""
-                INSERT INTO users2 (
-                    numero_control, plantel, apellido_paterno, apellido_materno,
-                    nombres, username, password
-                )
-                VALUES (
-                    :numero_control, :plantel, :apellido_paterno, :apellido_materno,
-                    :nombres, :username, :password
-                )
-            """),
-            {
-                "numero_control": numero_control,
-                "plantel": plantel,
-                "apellido_paterno": apellido_paterno,
-                "apellido_materno": apellido_materno,
-                "nombres": nombres,
-                "username": username,
-                "password": password_hash
-            }
-        )
+        sql = text("""
+            INSERT INTO users2 (
+                numero_control, plantel, apellido_paterno, apellido_materno, nombres, username, password, created_at
+            ) VALUES (
+                :numero_control,:plantel, :apellido_paterno, :apellido_materno, :nombres, :username, :password, :created_at
+            )
+        """)
+        session.execute(sql, {
+            "numero_control": numero_control,
+            "plantel": plantel,
+            "apellido_paterno": apellido_paterno,
+            "apellido_materno": apellido_materno,
+            "nombres": nombres,
+            "username": username,
+            "password": password,
+            "created_at": created_at
+        })
         session.commit()
-        return True
-
-    except pymysql.err.IntegrityError:
-        # Registro duplicado
-        session.rollback()
-        return False
-
     except Exception as e:
-        print("❌ DB ERROR register_user:", e)
+        print(f"DB ERROR during user registration: {e}")
         session.rollback()
         return False
+    return True
