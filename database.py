@@ -260,22 +260,20 @@ def get_user_from_database(username):
 
 
 
-
-# Register a new user in the database
 def register_user(session, numero_control, plantel, apellido_paterno,
-      apellido_materno, nombres, username, password, created_at):
+      apellido_materno, nombres, username, password_raw):
     try:
+        password_hash = bcrypt.generate_password_hash(password_raw).decode('utf-8')
+        
         session.execute(
         text("""
             INSERT INTO users2 (
-                numero_control, plantel,
-                apellido_paterno, apellido_materno,
-                nombres, username, password, created_at
+                numero_control, plantel, apellido_paterno, apellido_materno,
+                nombres, username, password
             )
             VALUES (
-                :numero_control, :plantel,
-                :apellido_paterno, :apellido_materno,
-                :nombres, :username, :password, :created_at
+                :numero_control, :plantel, :apellido_paterno, :apellido_materno,
+                :nombres, :username, :password
             )
         """),
         {
@@ -285,8 +283,7 @@ def register_user(session, numero_control, plantel, apellido_paterno,
             "apellido_materno": apellido_materno,
             "nombres": nombres,
             "username": username,
-            "password": password,
-            "created_at": created_at
+            "password": password_hash
         }
         )
         session.commit()
@@ -295,3 +292,5 @@ def register_user(session, numero_control, plantel, apellido_paterno,
         print("❌ DB ERROR register_user:", e)
         session.rollback()
         return False
+    
+    
