@@ -96,36 +96,98 @@ def login():
 # -----------------------------
 # Register selection
 # -----------------------------
+# RUTA GENERAL DE REGISTRO
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # Determinar tipo de usuario
-    user_type = None
-    if request.method == 'POST':
-        # Tomamos del formulario si viene por POST
-        user_type = request.form.get('user_type')
-    elif request.method == 'GET':
-        # Tomamos de query string si viene por GET
-        user_type = request.args.get('choice')
+    choice = request.args.get('choice')
 
-    # Redirigir según tipo
-    if user_type == 'A':
-        return redirect(url_for('register_alumno'))
-    elif user_type == 'D':
+    # Redirige según elección
+    if choice == 'D':
         return redirect(url_for('register_docente'))
+    elif choice == 'A':
+        return redirect(url_for('register_alumno'))
 
-    # Si no se sabe el tipo, mostramos la selección
-    return render_template('select_register_type.html')
+    # Si no hay choice, mostrar página de selección
+    if request.method == 'GET':
+        return render_template('register_choice.html')  # Página donde el usuario elige tipo
 
+# REGISTRO DOCENTE
 @app.route('/register/docente', methods=['GET', 'POST'])
 def register_docente():
-    # lógica de registro de docentes
-    return render_template("register_docente.html")
+    if request.method == 'POST':
+        # Obtener datos del formulario
+        nombre = request.form.get('nombre', '').strip()
+        email = request.form.get('email', '').strip()
+        password = request.form.get('password', '').strip()
+        password2 = request.form.get('password2', '').strip()
 
+        # VALIDACIÓN BÁSICA
+        errors = []
+        if not nombre:
+            errors.append("El nombre es obligatorio.")
+        if not email:
+            errors.append("El email es obligatorio.")
+        if not password or not password2:
+            errors.append("La contraseña es obligatoria.")
+        if password != password2:
+            errors.append("Las contraseñas no coinciden.")
+        if len(password) < 6:
+            errors.append("La contraseña debe tener al menos 6 caracteres.")
 
+        # Validar si el email ya existe
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            errors.append("Ya existe un usuario con este email.")
+
+        if errors:
+            return render_template('register_docente.html', errors=errors,
+                                   nombre=nombre, email=email)
+
+        # Crear usuario y guardar en DB
+        hashed_pw = generate_password_hash(password)
+        nuevo_docente = User(nombre=nombre, email=email, password=hashed_pw, role='docente')
+        db.session.add(nuevo_docente)
+        db.session.commit()
+        flash("Registro exitoso. Ya puedes iniciar sesión.", "success")
+        return redirect(url_for('login'))
+
+    # GET
+    return render_template('register_docente.html')
+
+# REGISTRO ALUMNO
 @app.route('/register/alumno', methods=['GET', 'POST'])
 def register_alumno():
-    # lógica de registro de alumnos
-    return render_template("register_alumno.html")
+    if request.method == 'POST':
+        nombre = request.form.get('nombre', '').strip()
+        email = request.form.get('email', '').strip()
+        password = request.form.get('password', '').strip()
+        password2 = request.form.get('password2', '').strip()
+
+        errors = []
+        if not nombre or not email or not password or not password2:
+            errors.append("Todos los campos son obligatorios.")
+        if password != password2:
+            errors.append("Las contraseñas no coinciden.")
+        if len(password) < 6:
+            errors.append("La contraseña debe tener al menos 6 caracteres.")
+
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            errors.append("Ya existe un usuario con este email.")
+
+        if errors:
+            return render_template('register_alumno.html', errors=errors,
+                                   nombre=nombre, email=email)
+
+        hashed_pw = generate_password_hash(password)
+        nuevo_alumno = User(nombre=nombre, email=email, password=hashed_pw, role='alumno')
+        db.session.add(nuevo_alumno)
+        db.session.commit()
+        flash("Registro exitoso. Ya puedes iniciar sesión.", "success")
+        return redirect(url_for('login'))
+
+    return render_template('register_alumno.html')
+
 
 # -----------------------------
 # Handle registration
