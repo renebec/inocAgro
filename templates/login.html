@@ -260,51 +260,7 @@
 
       <hr>
 
-          <section class="col-12 col-md-6" style="background-color:#98FA6E;padding:1%;font-size:"14px">
-              <!-- FLASH MESSAGES -->
-              {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                  {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                      {{ message }}
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                  {% endfor %}
-                {% endif %}
-              {% endwith %}
-
-              <form method="post" action="{{ url_for('login') }}">
-              <!--<form id="myform" method="POST" action="choice">-->
-              <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
-                  <input maxlenght="20" size="20" type="text" 
-                      id="username" name="username" required>
-               </div>
-               <div class="mb-3">
-                   <label for="password" class="form-label">Password</label>
-                   <input type="password"  maxlenght="20" size="20" id="password" name="password" required>
-               </div>
-               <button type="submit" class="btn btn-primary">Login</button>
-               <br>
-
-                <a>¿No tienes una cuenta?</a>
-                <br>
-
-                <form id="myform" method="POST" action="choice">
-                    <label>
-                    <input type="checkbox" name="choice" value="D" class="single-checkbox"> ¿Quieres registrarte?
-          </label>
-          <br>
-
-                    <a href="#" id="register-link">Continuar &#128209;</a>
-                    <!--<a type="button" href="{{ url_for('register') }}">Haz click para registrarte:</a>-->
-                </form>
-            </section>
-            <br><br>
-      <div class="d-none d-lg-block">
-        <!-- Este contenido sólo se verá en pantallas grandes (lg / >= 992px) -->
-        <br><br>
-      </div>
+          
 
 
 
@@ -334,6 +290,52 @@
             <iframe src="https://thingspeak.com/channels/2860984/charts/2?bgcolor=%23aeddad&color=%23d62020&dynamic=true&results=300&round=1&timescale=30&title=%25+Humedad+del+aire&type=line&xaxis=time&yaxis=Humedad" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>
           </div>	
         </div>
+      </div>
+
+      <section class="col-12 col-md-6" style="background-color:#98FA6E;padding:1%;font-size:"14px">
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="post" action="{{ url_for('login') }}">
+        <!--<form id="myform" method="POST" action="choice">-->
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input maxlenght="20" size="20" type="text" 
+                id="username" name="username" required>
+         </div>
+         <div class="mb-3">
+             <label for="password" class="form-label">Password</label>
+             <input type="password"  maxlenght="20" size="20" id="password" name="password" required>
+         </div>
+         <button type="submit" class="btn btn-primary">Login</button>
+         <br>
+
+          <a>¿No tienes una cuenta?</a>
+          <br>
+
+          <form id="myform" method="POST" action="choice">
+              <label>
+              <input type="checkbox" name="choice" value="D" class="single-checkbox"> ¿Quieres registrarte?
+      </label>
+      <br>
+
+              <a href="#" id="register-link">Continuar &#128209;</a>
+              <!--<a type="button" href="{{ url_for('register') }}">Haz click para registrarte:</a>-->
+          </form>
+      </section>
+      <br><br>
+      <div class="d-none d-lg-block">
+      <!-- Este contenido sólo se verá en pantallas grandes (lg / >= 992px) -->
+      <br><br>
       </div>
 
 
