@@ -199,6 +199,7 @@ def handle_register_user(choice):
 
     return render_template(template)
 
+
 @app.route("/register/alumno", methods=["GET", "POST"])
 def register_alumno():
     return handle_register_user("A")
