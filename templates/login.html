@@ -94,21 +94,22 @@
   }
 
   .banner-container {
+      position: relative;
       width: 100%;
       height: 280px;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       background: black;
   }
 
   .banner-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%) scale(0.7);
+
       width: 100%;
       height: auto;
-
-      /* AQUÍ controlas el "zoom" */
-      transform: scale(0.7);  /* 70% → más alejado */
   }
 
   #bannerx {
