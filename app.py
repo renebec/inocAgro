@@ -56,7 +56,7 @@ def home():
     if user:
         user_info = user.get("info")  # Aquí guardamos el texto del campo "info"
         if user_info:  # si hay mensaje, se muestra como flash verde
-            flash(user_info, "warning")
+            flash(user_info, "danger")
     return render_template(
         "home.html",
         username=username,
