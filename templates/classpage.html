@@ -105,6 +105,12 @@
                 margin-bottom:1px;
             }
 
+           .instrumento{
+               padding:10px;
+               background-color:rgba(190,120, 120, 0.8);
+               margin-bottom:1px;
+           }
+
             .emoji{
                 background-color: none;
                 font-size: 25px
@@ -402,7 +408,9 @@
         </div>
         <br>
         <br>
-        {{ j['instrument'] | safe }}
+      {% if i['instrument'] %} 
+      <pre class='instrumento'> {{i['instrument']}} </pre><br>
+      {% endif %}
         <br>
       <br>
         <div class:'referencia'>
