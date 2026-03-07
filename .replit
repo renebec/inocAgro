@@ -5,6 +5,10 @@ channel = "stable-25_05"
 packages = ["libev"]
 
 [[ports]]
+localPort = 5904
+externalPort = 3000
+
+[[ports]]
 localPort = 8080
 externalPort = 80
 
