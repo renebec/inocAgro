@@ -152,6 +152,28 @@
     border: 0;
   }
 
+  .contenedor-qr {
+    display: flex;
+    justify-content: center; /* Centra el QR en la pantalla (opcional) */
+    padding: 20px;
+  }
+
+  /* Configuración general para el QR */
+  .qr-responsivo {
+    height: auto; /* Mantiene la proporción cuadrada del QR */
+
+    /* Configuración para Escritorio (Por defecto) */
+    width: 15vw; /* Cubre exactamente el 15% del ancho de la pantalla */
+    min-width: 120px; /* Evita que se haga diminuto en pantallas medianas */
+  }
+
+  /* Configuración para Móviles (Pantallas menores a 768px) */
+  @media (max-width: 768px) {
+    .qr-responsivo {
+      width: 50vw; /* Cubre exactamente el 50% del ancho de la pantalla */
+    }
+  }
+
 </style>
 
   <!--
@@ -239,8 +261,12 @@
             <li>Carta de uso responsable del celular</li>
             <li>Formato de consentimiento de revisión de útiles escolares</li>
         </ul>
-        
-        
+
+        <div class="contenedor-qr">
+          <!-- Reemplaza "tu-codigo-qr.png" por la ruta real de tu imagen -->
+          <img src="https://cbta330.onrender.com/static/QRzipFormatosComplementarios.png" alt="Código QR para ir al sitio web" class="qr-responsivo">
+        </div>
+            
       </div>
     
     
